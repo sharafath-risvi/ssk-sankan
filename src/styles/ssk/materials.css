@@ -1,0 +1,227 @@
+/* ==========================================================================
+   5. PRODUCTS & MATERIALS — PINNED WIPE-OVER SEQUENCE
+   One stage stays pinned; each material's image wipes over the previous one
+   while the huge title, copy and macro detail swap.
+   ========================================================================== */
+
+.mat {
+  position: relative;
+  background: var(--ssk-light);
+  color: var(--ssk-dark);
+}
+
+.mat .eyebrow {
+  color: var(--ssk-accent-ink);
+}
+
+.mat__stage {
+  position: relative;
+  height: 100svh;
+  min-height: 40rem;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.mat__hud {
+  position: absolute;
+  top: clamp(5.25rem, 11vh, 7rem);
+  left: var(--gutter);
+  right: var(--gutter);
+  z-index: 6;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  pointer-events: none;
+}
+
+.mat__rail {
+  display: flex;
+  gap: clamp(1rem, 2.5vw, 2.5rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.mat__rail li {
+  position: relative;
+  padding-top: 0.9rem;
+}
+
+.mat__rail li::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--ssk-line-dark);
+}
+
+.mat__rail-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--ssk-accent-ink);
+  transform-origin: left;
+  transform: scaleX(0);
+}
+
+.mat__rail li:first-child .mat__rail-fill {
+  transform: scaleX(1);
+}
+
+/* ---- Material = text column + media column ----------------------------- */
+.material {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  grid-template-rows: minmax(0, 1fr);
+  align-items: center;
+  column-gap: clamp(2rem, 5vw, 6rem);
+  padding: clamp(9rem, 17vh, 11rem) var(--gutter) clamp(2.5rem, 7vh, 4.5rem);
+}
+
+.material__text {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  gap: clamp(1rem, 2.4vh, 1.75rem);
+}
+
+.material__index {
+  font-size: 0.74rem;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ssk-accent-ink);
+}
+
+.material__title {
+  font-size: clamp(2.6rem, min(6vw, 12vh), 7.5rem);
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+}
+
+.material__desc {
+  max-width: 26rem;
+  font-size: clamp(0.98rem, 1.12vw, 1.1rem);
+  line-height: 1.65;
+  color: #3a3935;
+}
+
+.material__meta {
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #55534e;
+}
+
+.material__media {
+  position: relative;
+  height: 100%;
+  max-height: 76vh;
+}
+
+.material__frame {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: var(--ssk-dark);
+}
+
+.material__frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* macro crop of the same material, overlapping the main frame */
+.material__detail {
+  position: absolute;
+  left: calc(-1 * clamp(2rem, 4vw, 4.5rem));
+  bottom: calc(-1 * clamp(0.5rem, 2vh, 1.5rem));
+  z-index: 2;
+  overflow: hidden;
+  width: clamp(9rem, 14vw, 15rem);
+  aspect-ratio: 1;
+  border: 0.45rem solid var(--ssk-light);
+  background: var(--ssk-dark);
+}
+
+.material__detail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.9);
+  transform-origin: var(--focus, 50% 50%);
+}
+
+.material__caption {
+  position: absolute;
+  right: 0.9rem;
+  bottom: 0.9rem;
+  z-index: 2;
+  padding: 0.35rem 0.6rem;
+  background: rgba(11, 11, 10, 0.7);
+  color: var(--ssk-on-dark);
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* ---- Stacked fallback --------------------------------------------------- */
+@media (max-width: 1023.98px), (prefers-reduced-motion: reduce) {
+  .mat__stage {
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+  }
+
+  .mat__hud {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    padding: clamp(5rem, 12vw, 8rem) var(--gutter) 1rem;
+  }
+
+  .mat__rail {
+    display: none;
+  }
+
+  .material {
+    position: relative;
+    inset: auto;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    gap: 2.5rem;
+    padding: 3rem var(--gutter) 4rem;
+    border-top: 1px solid var(--ssk-line-dark);
+  }
+
+  .material__media {
+    order: -1;
+    height: auto;
+    max-height: none;
+    aspect-ratio: 4 / 5;
+    max-width: 34rem;
+  }
+
+  .material__detail {
+    left: auto;
+    right: -0.25rem;
+    bottom: -1.25rem;
+    width: 7.5rem;
+  }
+
+  .material__title {
+    font-size: clamp(2.7rem, 13vw, 6rem);
+  }
+}

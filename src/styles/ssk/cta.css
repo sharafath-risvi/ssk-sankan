@@ -1,0 +1,115 @@
+/* ==========================================================================
+   6. CTA — cinematic closing frame (shared across Home, About, Services, Contact)
+   ========================================================================== */
+
+.cta {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 100svh;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--ssk-dark, #0b0b0a);
+  color: var(--ssk-on-dark, #f4f2ee);
+  padding: clamp(3.5rem, 6vh, 6rem) var(--gutter, clamp(1.25rem, 4vw, 4rem));
+}
+
+.cta__bg {
+  position: absolute;
+  inset: -9% 0;
+  z-index: -2;
+}
+
+.cta__bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 70% 50%;
+  animation: cta-drift 30s ease-in-out infinite alternate;
+}
+
+@keyframes cta-drift {
+  from { transform: scale(1.04) translate3d(0, 0, 0); }
+  to { transform: scale(1.16) translate3d(-2%, 1%, 0); }
+}
+
+.cta__shade {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(90deg, rgba(8, 8, 7, 0.88) 0%, rgba(8, 8, 7, 0.5) 55%, rgba(8, 8, 7, 0.1) 100%),
+    linear-gradient(180deg, rgba(8, 8, 7, 0.5) 0%, rgba(8, 8, 7, 0) 35%, rgba(8, 8, 7, 0.55) 100%);
+}
+
+.cta__inner {
+  position: relative;
+  width: 100%;
+  display: grid;
+  gap: clamp(1.5rem, 3vh, 2.5rem);
+}
+
+.cta__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.82rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ssk-accent-dark, #3EA770);
+  margin: 0;
+}
+
+.cta__title {
+  margin: 0;
+  font-size: clamp(2.9rem, 8.4vw, 9.3rem);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--ssk-on-dark, #f4f2ee);
+}
+
+.cta__title .line:nth-child(2) {
+  padding-left: clamp(1.5rem, 8vw, 8.5rem);
+}
+
+.cta__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  padding-top: clamp(1.5rem, 3vh, 2.5rem);
+  border-top: 1px solid var(--ssk-line, rgba(244, 242, 238, 0.16));
+}
+
+.cta__text {
+  max-width: 32rem;
+  line-height: 1.65;
+  color: var(--ssk-on-dark-muted, rgba(244, 242, 238, 0.66));
+  font-size: clamp(1.05rem, 1.3vw, 1.2rem);
+  margin: 0;
+}
+
+.cta__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+@media (max-width: 767.98px) {
+  .cta {
+    min-height: auto;
+    padding: clamp(5rem, 10vh, 7rem) var(--gutter, 1.25rem);
+  }
+
+  .cta__title {
+    font-size: clamp(2.32rem, 10.6vw, 4.28rem);
+    line-height: 0.94;
+  }
+
+  .cta__title .line:nth-child(2) {
+    padding-left: clamp(1rem, 5vw, 3rem);
+  }
+}

@@ -1,0 +1,321 @@
+/* ==========================================================================
+   SSK HOME — base system
+   All colours come from the central --ssk-* tokens in src/index.css.
+   Pinned-scene breakpoint mirrors PINNED in src/utils/gsap.js:
+   (min-width:1024px) and (prefers-reduced-motion: no-preference)
+   ========================================================================== */
+
+.ssk-home {
+  --gutter: clamp(1.25rem, 4vw, 4rem);
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  background: var(--ssk-dark);
+  color: var(--ssk-on-dark);
+  overflow-x: clip; /* no horizontal overflow, without creating a scroll container */
+}
+
+.ssk-home img {
+  display: block;
+  max-width: none;
+}
+
+.ssk-home h1,
+.ssk-home h2,
+.ssk-home h3 {
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+}
+
+.ssk-home p {
+  margin: 0;
+}
+
+/* ---- Masked headline lines ------------------------------------------- */
+.line {
+  display: block;
+  overflow: hidden;
+  /* breathing room so tight line-height never clips glyphs */
+  padding-block: 0.07em;
+  margin-block: -0.07em;
+}
+
+.line__inner {
+  display: block;
+  will-change: transform;
+}
+
+.line__inner.is-accent {
+  color: var(--ssk-accent-dark, #3EA770);
+}
+
+.on-light .line__inner.is-accent {
+  color: var(--ssk-accent-light, #642C8B);
+}
+
+/* Background-specific accent utility classes */
+.text-accent-light {
+  color: var(--ssk-accent-light, #642C8B) !important;
+}
+
+.text-accent-dark {
+  color: var(--ssk-accent-dark, #3EA770) !important;
+}
+
+/* ---- Labels ----------------------------------------------------------- */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+  font-size: 0.74rem;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.eyebrow::before {
+  content: '';
+  width: 2.75rem;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.7;
+}
+
+.tbc {
+  display: inline-block;
+  margin-left: 0.6em;
+  padding: 0.14em 0.55em;
+  border: 1px solid currentColor;
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  vertical-align: middle;
+  opacity: 0.7;
+}
+
+/* ---- Buttons ---------------------------------------------------------- */
+.btn {
+  --btn-fill: var(--ssk-accent);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.95rem;
+  padding: 1.1rem 1.75rem;
+  border: 1px solid currentColor;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  overflow: hidden;
+  isolation: isolate;
+  transition: color 0.5s var(--ease), border-color 0.5s var(--ease);
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--btn-fill);
+  transform: translateY(101%);
+  transition: transform 0.6s var(--ease);
+}
+
+.btn:hover::before,
+.btn:focus-visible::before {
+  transform: translateY(0);
+}
+
+.btn__arrow {
+  flex: none;
+  transition: transform 0.5s var(--ease);
+}
+
+.btn:hover .btn__arrow,
+.btn:focus-visible .btn__arrow {
+  transform: translateX(0.4rem);
+}
+
+.btn--solid {
+  background: var(--ssk-on-dark);
+  border-color: var(--ssk-on-dark);
+  color: var(--ssk-dark);
+}
+
+.btn--solid:hover,
+.btn--solid:focus-visible {
+  border-color: var(--ssk-accent);
+}
+
+.btn--ghost {
+  --btn-fill: var(--ssk-on-dark);
+  color: var(--ssk-on-dark);
+}
+
+.btn--ghost:hover,
+.btn--ghost:focus-visible {
+  color: var(--ssk-dark);
+}
+
+.btn--dark {
+  --btn-fill: var(--ssk-accent);
+  background: var(--ssk-dark);
+  border-color: var(--ssk-dark);
+  color: var(--ssk-on-dark);
+}
+
+.btn--dark:hover,
+.btn--dark:focus-visible {
+  color: var(--ssk-dark);
+  border-color: var(--ssk-accent);
+}
+
+/* ---- Inline text link ------------------------------------------------- */
+.textlink {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding-bottom: 0.45rem;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: inherit;
+}
+
+.textlink::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transform-origin: right;
+  transition: transform 0.6s var(--ease);
+}
+
+.textlink:hover::after,
+.textlink:focus-visible::after {
+  animation: underline-redraw 0.9s var(--ease);
+}
+
+.textlink svg {
+  transition: transform 0.5s var(--ease);
+}
+
+.textlink:hover svg,
+.textlink:focus-visible svg {
+  transform: translateX(0.35rem);
+}
+
+@keyframes underline-redraw {
+  0% { transform: scaleX(1); transform-origin: right; }
+  45% { transform: scaleX(0); transform-origin: right; }
+  46% { transform: scaleX(0); transform-origin: left; }
+  100% { transform: scaleX(1); transform-origin: left; }
+}
+
+/* ---- Film grain (static, cheap) --------------------------------------- */
+.grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0.09;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---- Focus ------------------------------------------------------------ */
+.theme-ssk :focus-visible {
+  outline: 2px solid var(--ssk-accent);
+  outline-offset: 4px;
+}
+
+/* ---- Generic media helpers ------------------------------------------- */
+.media {
+  position: relative;
+  overflow: hidden;
+  background: var(--ssk-dark-2);
+}
+
+.media__drift {
+  position: absolute;
+  inset: -9% 0; /* extra height gives the parallax room to travel */
+}
+
+.media img,
+.media__drift img,
+.js-scale {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.js-scale {
+  display: block;
+}
+
+/* ---- Reduced motion --------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .ssk-home *,
+  .ssk-home *::before,
+  .ssk-home *::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ==========================================================================
+   TYPOGRAPHY UTILITIES
+   Shared across all SSK pages (Home, About, Services, Contact)
+   ========================================================================== */
+
+.ssk-h-hero {
+  font-size: clamp(2.7rem, min(9.6vw, 15.5vh), 11.5rem);
+  line-height: 0.9;
+  letter-spacing: -0.045em;
+  font-weight: 700;
+}
+
+.ssk-h-section {
+  font-size: clamp(2.6rem, min(6vw, 12vh), 7.5rem);
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+  font-weight: 700;
+}
+
+.ssk-h-sub {
+  font-size: clamp(2.1rem, min(4vw, 8.4vh), 5.6rem);
+  line-height: 0.93;
+  letter-spacing: -0.04em;
+  font-weight: 700;
+}
+
+.ssk-body {
+  font-size: clamp(0.95rem, 1.05vw, 1.05rem);
+  line-height: 1.65;
+}
+
+.ssk-eyebrow {
+  font-size: 0.74rem;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.ssk-btn-text {
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+}

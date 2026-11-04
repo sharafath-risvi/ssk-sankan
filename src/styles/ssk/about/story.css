@@ -1,0 +1,252 @@
+/* ==========================================================================
+   ABOUT PAGE — 2. OUR STORY
+   Desktop, motion allowed: the pinned track still moves one viewport left.
+   OUR STORY is the heading of the right-hand column. Supporting images sit
+   under the factory photo and are uncovered as it leaves. Tablet, mobile,
+   and reduced motion stack in document flow.
+   ========================================================================== */
+
+.astory {
+  --gutter: clamp(1.5rem, 4vw, 4.5rem);
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  background: var(--ssk-light);
+  color: var(--ssk-dark);
+  padding: clamp(4.5rem, 10vw, 7rem) var(--gutter);
+}
+
+.astory__track {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2.5rem, 6vw, 4.5rem);
+}
+
+.astory__scene {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.5rem, 4vw, 2.75rem);
+}
+
+.astory__photo {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  background: var(--ssk-dark);
+}
+
+.astory__photo--a {
+  aspect-ratio: 4 / 3;
+}
+
+.astory__photo img,
+.astory__tile img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.astory__head {
+  display: grid;
+  gap: 1.1rem;
+}
+
+.astory__body-group {
+  display: grid;
+  gap: 1.35rem;
+}
+
+.astory__display {
+  margin: 0;
+  font-size: clamp(3.6rem, 14vw, 5.6rem);
+  line-height: 0.88;
+  letter-spacing: -0.045em;
+  text-transform: uppercase;
+  color: var(--ssk-dark);
+}
+
+.astory__display span {
+  display: block;
+}
+
+.astory__display .is-accent {
+  color: var(--ssk-accent-ink);
+}
+
+.astory__kicker {
+  margin: 0;
+  font-size: clamp(0.8rem, 0.9vw, 0.88rem);
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ssk-accent-ink);
+}
+
+.astory__body {
+  margin: 0;
+  font-size: clamp(1.14rem, 2.5vw, 1.36rem);
+  line-height: 1.76;
+  color: var(--ssk-secondary);
+}
+
+.astory__body:first-child {
+  font-size: clamp(1.2rem, 2.6vw, 1.44rem);
+  font-weight: 500;
+  line-height: 1.7;
+  color: var(--ssk-dark);
+}
+
+.astory__copy {
+  display: grid;
+  gap: 1.65rem;
+  max-width: 42rem;
+  margin-top: clamp(1.75rem, 4vw, 2.75rem);
+}
+
+.astory__copy .textlink {
+  margin-top: 0.45rem;
+  width: fit-content;
+  font-size: 0.84rem;
+}
+
+.astory__gallery {
+  display: grid;
+  grid-template-columns: 1.12fr 0.98fr;
+  grid-template-rows: 5.5rem 18.5rem;
+  gap: 0.9rem;
+  margin-top: clamp(1.75rem, 5vw, 3rem);
+}
+
+.astory__tile {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  background: var(--ssk-dark);
+  border-radius: 4px;
+}
+
+.astory__tile--main {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+}
+
+.astory__tile--detail {
+  grid-column: 2;
+  grid-row: 2;
+  z-index: 2;
+  margin-left: -1.5rem;
+  border: 4px solid var(--ssk-light);
+  box-shadow: 0 1.25rem 2.75rem -0.75rem rgba(11, 11, 10, 0.28);
+}
+
+/* ==========================================================================
+   Pinned horizontal track — desktop, motion allowed
+   ========================================================================== */
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+  .astory {
+    padding: 0;
+  }
+
+  .astory__stage {
+    position: relative;
+    height: 100svh;
+    min-height: 42rem;
+    max-width: 1680px;
+    margin-inline: auto;
+    overflow: hidden;
+  }
+
+  .astory__track {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: row;
+    gap: 0;
+    height: 100%;
+    width: max-content;
+    pointer-events: none;
+    will-change: transform;
+  }
+
+  .astory__scene {
+    position: relative;
+    flex: 0 0 100%;
+    height: 100%;
+    gap: 0;
+  }
+
+  .astory__scene--intro {
+    display: block;
+  }
+
+  .astory__photo--a {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 48%;
+    aspect-ratio: auto;
+  }
+
+  .astory__photo--a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(11, 11, 10, 0.05) 40%, rgba(11, 11, 10, 0.55) 100%);
+    pointer-events: none;
+  }
+
+  .astory__photo--a img {
+    height: 100%;
+    transform-origin: 60% 50%;
+    will-change: transform;
+  }
+
+  .astory__display {
+    font-size: clamp(4rem, min(5.6vw, 9.8vh), 6.4rem);
+  }
+
+  /* The story column stays on the right while the factory image moves left. */
+  .astory__copy {
+    position: absolute;
+    z-index: 4;
+    top: 50%;
+    right: var(--gutter);
+    transform: translateY(-50%);
+    width: min(41rem, 42%);
+    max-width: none;
+    margin-top: 0;
+    gap: clamp(1.6rem, 2.6vh, 2.15rem);
+    pointer-events: auto;
+  }
+
+  .astory__copy .astory__body {
+    font-size: clamp(1.16rem, 1.3vw, 1.38rem);
+    line-height: 1.78;
+    max-width: 39rem;
+  }
+
+  .astory__copy .astory__body:first-child {
+    font-size: clamp(1.24rem, 1.42vw, 1.48rem);
+    line-height: 1.72;
+  }
+
+  .astory__gallery {
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 48%;
+    height: 100%;
+    margin-top: 0;
+    padding: 9vh clamp(1.5rem, 2.5vw, 2.75rem) 9vh var(--gutter);
+    grid-template-columns: 1.08fr 0.98fr;
+    grid-template-rows: 0.42fr 1.58fr;
+    gap: 1rem;
+  }
+
+  .astory__tile--detail {
+    margin-left: -2.25rem;
+    border-width: 6px;
+  }
+}

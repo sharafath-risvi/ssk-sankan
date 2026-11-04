@@ -1,0 +1,272 @@
+/* ==========================================================================
+   SANKAN — Contact / enquiry
+   Two columns on desktop (details left, form right), stacked on mobile.
+   ========================================================================== */
+
+.sn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  width: fit-content;
+  margin-top: 0.4rem;
+  color: var(--sn-violet);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-bottom: 1px solid var(--sn-violet);
+  padding-bottom: 0.25rem;
+}
+
+.sn-contact {
+  background: color-mix(in srgb, var(--sn-lavender) 34%, var(--sn-white));
+  padding: clamp(4.5rem, 10vw, 8rem) 0;
+}
+
+.sn-contact__inner {
+  display: grid;
+  gap: clamp(2.5rem, 6vw, 4rem);
+  width: min(100%, 90rem);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.sn-contact__intro {
+  display: grid;
+  gap: 1.25rem;
+  align-content: start;
+}
+
+.sn-details {
+  display: grid;
+  gap: 0;
+  margin-top: 0.8rem;
+  max-width: 32rem;
+  border-top: 1px solid var(--sn-lavender-2);
+}
+
+.sn-detail {
+  display: grid;
+  grid-template-columns: 2.4rem minmax(0, 1fr);
+  gap: 1rem;
+  align-items: start;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid var(--sn-lavender-2);
+}
+
+.sn-detail__icon {
+  display: grid;
+  place-items: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border: 1px solid var(--sn-lavender-2);
+  border-radius: 50%;
+  color: var(--sn-violet);
+  background: var(--sn-white);
+}
+
+.sn .sn-detail p {
+  margin: 0;
+}
+
+.sn-detail__label {
+  color: var(--sn-dust);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.sn-detail__value {
+  margin-top: 0.3rem;
+  color: var(--sn-violet);
+  font-size: clamp(1.1rem, 1.5vw, 1.35rem);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+  text-decoration: none;
+}
+
+a.sn-detail__value:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+
+.sn-detail__value.is-tbc {
+  color: var(--sn-mauve);
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+/* ---- form ---- */
+.sn-form {
+  display: grid;
+  gap: 1.75rem;
+  padding: clamp(1.4rem, 3.4vw, 2.75rem);
+  background: var(--sn-white);
+  border: 1px solid var(--sn-lavender);
+  box-shadow: 0 2rem 4rem rgba(73, 36, 74, 0.08);
+}
+
+.sn-form__head h3 {
+  font-size: clamp(1.5rem, 2.4vw, 2rem);
+  line-height: 1;
+}
+
+.sn .sn-form__head p {
+  margin-top: 0.6rem;
+  color: var(--sn-dust);
+  font-size: 0.9rem;
+}
+
+.sn-form__grid {
+  display: grid;
+  gap: 1.15rem;
+}
+
+.sn-field {
+  display: grid;
+  gap: 0.5rem;
+  align-content: start;
+  min-width: 0;
+}
+
+.sn-field label {
+  color: var(--sn-violet);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.sn-field input,
+.sn-field select,
+.sn-field textarea {
+  width: 100%;
+  padding: 0.95rem 1rem;
+  border: 1px solid var(--sn-lavender-2);
+  border-radius: 0;
+  background: color-mix(in srgb, var(--sn-lavender) 18%, var(--sn-white));
+  color: var(--sn-charcoal);
+  font: inherit;
+  font-size: 1rem;
+  line-height: 1.4;
+  letter-spacing: 0;
+  text-transform: none;
+  appearance: none;
+}
+
+.sn-field select {
+  padding-right: 2.6rem;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--sn-violet) 50%),
+    linear-gradient(135deg, var(--sn-violet) 50%, transparent 50%);
+  background-position:
+    calc(100% - 1.25rem) 50%,
+    calc(100% - 0.9rem) 50%;
+  background-size: 0.4rem 0.4rem, 0.4rem 0.4rem;
+  background-repeat: no-repeat;
+}
+
+.sn-field textarea {
+  min-height: 9rem;
+  resize: vertical;
+}
+
+.sn-field input:hover,
+.sn-field select:hover,
+.sn-field textarea:hover {
+  border-color: var(--sn-dust);
+}
+
+.sn-field input:focus-visible,
+.sn-field select:focus-visible,
+.sn-field textarea:focus-visible {
+  border-color: var(--sn-violet);
+  background: var(--sn-white);
+  outline: 2px solid var(--sn-violet);
+  outline-offset: 2px;
+}
+
+.sn-field.has-error input,
+.sn-field.has-error select,
+.sn-field.has-error textarea {
+  border-color: #8f1d4e;
+}
+
+.sn .sn-field__error {
+  color: #8f1d4e;
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+
+.sn-form__foot {
+  display: grid;
+  gap: 1rem;
+  justify-items: start;
+}
+
+.sn-form__foot .sn-btn {
+  justify-content: center;
+  width: 100%;
+  padding: 1.1rem 1.5rem;
+}
+
+.sn .sn-form__status {
+  padding: 0.95rem 1rem;
+  border-left: 3px solid var(--sn-violet);
+  background: color-mix(in srgb, var(--sn-lavender) 40%, var(--sn-white));
+  color: var(--sn-violet-dark);
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.sn .sn-form__status.is-error {
+  border-left-color: #8f1d4e;
+  color: #6a1239;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .sn-field input,
+  .sn-field select,
+  .sn-field textarea,
+  .sn-detail__icon {
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+  }
+
+  .sn-detail:hover .sn-detail__icon {
+    background: var(--sn-violet);
+    color: var(--sn-white);
+  }
+}
+
+@media (min-width: 640px) {
+  .sn-form__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 1.25rem;
+  }
+
+  .sn-field.is-wide {
+    grid-column: 1 / -1;
+  }
+
+  .sn-form__foot .sn-btn {
+    width: auto;
+    min-width: 14rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .sn-contact__inner {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: clamp(3rem, 7vw, 8rem);
+    align-items: start;
+  }
+
+  .sn-contact__intro {
+    position: sticky;
+    top: 7rem;
+  }
+}

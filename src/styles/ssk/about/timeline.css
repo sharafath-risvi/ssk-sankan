@@ -1,0 +1,152 @@
+/* ==========================================================================
+   ABOUT PAGE - 5. TIMELINE
+   ========================================================================== */
+
+.atime {
+  position: relative;
+  height: 100svh;
+  min-height: 45rem;
+  overflow: hidden;
+}
+
+.atime__inner {
+  height: 100%;
+  padding: clamp(6rem, 12vh, 8rem) var(--gutter);
+  display: flex;
+  flex-direction: column;
+}
+
+.atime__grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: clamp(4rem, 8vw, 8rem);
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.atime__visuals {
+  width: 100%;
+}
+
+.atime__media-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+
+.atime__media {
+  position: absolute;
+  inset: 0;
+  background: var(--ssk-dark-2);
+}
+
+.atime__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.atime__content {
+  position: relative;
+  display: flex;
+  height: 100%;
+  align-items: center;
+  padding-left: clamp(2rem, 4vw, 4rem);
+}
+
+.atime__track {
+  position: absolute;
+  top: 10%;
+  bottom: 10%;
+  left: 0;
+  width: 2px;
+}
+
+.atime__track-bg {
+  position: absolute;
+  inset: 0;
+  background: var(--ssk-line-dark);
+}
+
+.atime__track-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background: var(--ssk-on-dark);
+  transform-origin: top;
+  transform: scaleY(0);
+}
+
+.atime__items {
+  position: relative;
+  width: 100%;
+}
+
+.atime__item {
+  width: 100%;
+}
+
+.atime__year {
+  color: var(--ssk-on-dark-muted);
+}
+
+.atime__title {
+  margin-top: 1rem;
+}
+
+.atime__desc {
+  margin-top: 1.5rem;
+  max-width: 24rem;
+  color: var(--ssk-on-dark-muted);
+}
+
+@media (max-width: 1023.98px), (prefers-reduced-motion: reduce) {
+  .atime {
+    height: auto;
+    min-height: 0;
+    padding: clamp(6rem, 12vh, 10rem) 0;
+  }
+  
+  .atime__inner {
+    padding: 0 var(--gutter);
+  }
+  
+  .atime__grid {
+    grid-template-columns: 1fr;
+    gap: 4rem;
+  }
+  
+  .atime__visuals {
+    display: none; /* Hide visuals on mobile to focus on the content */
+  }
+
+  .atime__content {
+    padding-left: 1.5rem;
+  }
+
+  .atime__track {
+    top: 0;
+    bottom: 0;
+  }
+  
+  .atime__track-fill {
+    display: none;
+  }
+
+  .atime__items {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+  }
+
+  .atime__item {
+    position: relative !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+  }
+}

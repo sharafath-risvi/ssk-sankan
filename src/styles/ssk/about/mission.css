@@ -1,0 +1,137 @@
+/* ==========================================================================
+   ABOUT PAGE - 4. MISSION & VISION
+   ========================================================================== */
+
+.amv {
+  --gutter: clamp(1.25rem, 5vw, 2rem);
+  position: relative;
+  height: 100svh;
+  min-height: 45rem;
+  overflow: hidden;
+}
+
+.amv__inner {
+  box-sizing: border-box;
+  width: min(100%, 112rem);
+  height: 100%;
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+  display: flex;
+  align-items: center;
+}
+
+.amv__grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(4rem, 8vw, 8rem);
+  align-items: center;
+}
+
+.amv__content-col {
+  position: relative;
+}
+
+.amv__content-wrapper {
+  position: relative;
+}
+
+.amv__block {
+  position: relative;
+}
+
+.amv__block--vision {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.amv__eyebrow {
+  margin-bottom: 2rem;
+  color: var(--ssk-accent-ink);
+}
+
+.amv__text {
+  max-width: 32rem;
+  /* Light ground: charcoal from the SSK palette, softer than near-black --ssk-dark */
+  color: var(--ssk-secondary);
+}
+
+.amv__media-col {
+  position: relative;
+}
+
+.amv__media-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+
+.amv__media {
+  position: absolute;
+  inset: 0;
+  background: var(--ssk-dark);
+}
+
+.amv__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.amv__media--top {
+  z-index: 2;
+}
+
+@media (min-width: 768px) and (max-width: 1023.98px) {
+  .amv {
+    --gutter: clamp(1.75rem, 4vw, 3rem);
+  }
+}
+
+@media (min-width: 1024px) {
+  .amv {
+    --gutter: clamp(2.75rem, 5.5vw, 6.5rem);
+  }
+}
+
+@media (max-width: 1023.98px), (prefers-reduced-motion: reduce) {
+  .amv {
+    height: auto;
+    min-height: 0;
+    padding: clamp(6rem, 12vh, 10rem) 0;
+  }
+  
+  .amv__grid {
+    grid-template-columns: 1fr;
+    gap: 6rem;
+  }
+
+  .amv__block--vision {
+    position: relative;
+    visibility: visible;
+    opacity: 1;
+    margin-top: 4rem;
+    padding-top: 4rem;
+    border-top: 1px solid var(--ssk-line-dark);
+  }
+
+  .amv__media--top {
+    position: relative;
+    z-index: 1;
+  }
+
+  .amv__media {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    margin-top: 2rem;
+  }
+
+  .amv__media-wrapper {
+    aspect-ratio: auto;
+    display: flex;
+    flex-direction: column;
+  }
+}

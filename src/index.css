@@ -1,0 +1,99 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    transition: background-color 0.6s ease, color 0.6s ease;
+  }
+
+  :root, .theme-ssk {
+    --font-sora: 'Sora', sans-serif;
+    --font-display: 'Space Grotesk', system-ui, sans-serif;
+
+    /* SSK Theme (Placeholders) */
+    --ssk-primary: #111111;
+    --ssk-secondary: #444444;
+    --ssk-background: #ffffff;
+    --ssk-surface: #f5f5f5;
+    --ssk-text: #111111;
+    --ssk-muted: #888888;
+    /* SSK Dual Accent System:
+       --ssk-accent-light (#642C8B): Primary Violet for white, light grey, and light neutral backgrounds.
+       --ssk-accent-dark  (#3EA770): Green for solid black, dark, and dark image/video backgrounds. */
+    --ssk-accent-light: #642C8B;
+    --ssk-accent-dark: #3EA770;
+    --ssk-accent: var(--ssk-accent-dark); /* Accent on black, dark & image/video surfaces */
+    --ssk-accent-ink: var(--ssk-accent-light); /* Accent for typography on light surfaces */
+
+    /* SSK extended tokens (homepage cinematic system) */
+    --ssk-dark: #0b0b0a;
+    --ssk-dark-2: #141413;
+    --ssk-light: #efece6;
+    --ssk-on-dark: #f4f2ee;
+    --ssk-on-dark-muted: rgba(244, 242, 238, 0.66);
+    --ssk-line: rgba(244, 242, 238, 0.16);
+    --ssk-line-dark: rgba(11, 11, 10, 0.18);
+  }
+
+  .theme-sankan {
+    /* Sankan Theme */
+    --sankan-primary: #4D1C50;
+    --sankan-primary-dark: #49244A;
+    --sankan-background: #FFFFFF;
+    --sankan-surface: #E2CEE4;
+    --sankan-secondary: #C3B3C3;
+    --sankan-text: #313131;
+    --sankan-accent: #876A88;
+    --sankan-muted: #9E889E;
+  }
+
+  /* Default body styles - will be overridden by themes */
+  body {
+    @apply antialiased text-[color:var(--ssk-text)] bg-[color:var(--ssk-background)];
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+  }
+}
+
+/* SSK Specific Global Classes */
+.theme-ssk {
+  background-color: var(--ssk-background);
+  color: var(--ssk-text);
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+}
+
+/* Sankan Specific Global Classes */
+.theme-sankan {
+  background-color: var(--sankan-background);
+  color: var(--sankan-text);
+  /* Same family as SSK. Sankan keeps its own violet palette. */
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+}
+
+/* Smooth anchor scrolling only for the Sankan single page.
+   SSK uses GSAP ScrollTrigger pinning, which must not fight native smooth scrolling. */
+html:has(body.theme-sankan) {
+  scroll-behavior: smooth;
+}
+
+/* Base custom classes for animations/layouts */
+.cinematic-mask {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.clip-path-reveal {
+  clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
+  transition: clip-path 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+}
+.clip-path-reveal.active {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.text-reveal-wrapper {
+  overflow: hidden;
+}
+.text-reveal-inner {
+  transform: translateY(100%);
+  transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.text-reveal-wrapper.active .text-reveal-inner {
+  transform: translateY(0);
+}

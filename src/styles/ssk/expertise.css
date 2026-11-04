@@ -1,0 +1,290 @@
+/* ==========================================================================
+   3. OUR EXPERTISE — PINNED VERTICAL STORY
+   Desktop (>=1024px, motion allowed): one 100svh stage is pinned by GSAP while
+   three scenes wipe over each other.
+   Everything else: scenes stack as normal, fully readable sections.
+   ========================================================================== */
+
+.exp {
+  position: relative;
+  background: var(--ssk-dark);
+}
+
+.exp__stage {
+  position: relative;
+  height: 100svh;
+  min-height: 40rem;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* HUD: section label, counter, progress */
+.exp__hud {
+  position: absolute;
+  top: clamp(5.25rem, 11vh, 7rem);
+  left: var(--gutter);
+  right: var(--gutter);
+  z-index: 6;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  pointer-events: none;
+}
+
+.exp__label {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.exp__label-sub {
+  max-width: 17rem;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: var(--ssk-on-dark-muted);
+}
+
+.exp__meter {
+  display: flex;
+  align-items: stretch;
+  gap: 1.1rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.exp__count {
+  height: 1.2em;
+  overflow: hidden;
+  font-size: clamp(1.4rem, 2vw, 2rem);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.exp__count-track {
+  display: block;
+}
+
+.exp__count-track span {
+  display: block;
+  height: 1.2em;
+}
+
+.exp__of {
+  align-self: flex-end;
+  padding-bottom: 0.2rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.2em;
+  color: var(--ssk-on-dark-muted);
+}
+
+.exp__bar {
+  position: relative;
+  width: 2px;
+  background: var(--ssk-line);
+}
+
+.exp__bar-fill {
+  position: absolute;
+  inset: 0;
+  background: var(--ssk-accent);
+  transform-origin: top;
+  transform: scaleY(0.3333);
+}
+
+/* ---- Scenes ------------------------------------------------------------ */
+.scene {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  isolation: isolate; /* later scenes always paint fully above earlier ones */
+  pointer-events: none; /* stacked scenes must not swallow clicks meant for the visible one */
+}
+
+.scene__content,
+.scene__inset {
+  pointer-events: auto;
+}
+
+.scene__bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: var(--ssk-dark-2);
+}
+
+.scene__bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.scene__shade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(0deg, rgba(8, 8, 7, 0.9) 0%, rgba(8, 8, 7, 0.35) 45%, rgba(8, 8, 7, 0.45) 100%),
+    linear-gradient(90deg, rgba(8, 8, 7, 0.55) 0%, rgba(8, 8, 7, 0) 70%);
+}
+
+.scene:nth-child(even) .scene__shade {
+  background:
+    linear-gradient(0deg, rgba(8, 8, 7, 0.9) 0%, rgba(8, 8, 7, 0.35) 45%, rgba(8, 8, 7, 0.45) 100%),
+    linear-gradient(270deg, rgba(8, 8, 7, 0.6) 0%, rgba(8, 8, 7, 0) 70%);
+}
+
+.scene__content {
+  position: absolute;
+  left: var(--gutter);
+  bottom: clamp(2.5rem, 9vh, 5.5rem);
+  z-index: 2;
+  display: grid;
+  gap: clamp(1.1rem, 2.4vh, 1.75rem);
+  max-width: min(52rem, 62vw);
+}
+
+.scene:nth-child(even) .scene__content {
+  left: auto;
+  right: var(--gutter);
+}
+
+.scene__index {
+  font-size: 0.74rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ssk-accent);
+}
+
+.scene__title {
+  font-size: clamp(2.6rem, min(7.2vw, 13.5vh), 8.5rem);
+  line-height: 0.9;
+  letter-spacing: -0.045em;
+}
+
+.scene__text {
+  max-width: 28rem;
+  font-size: clamp(0.98rem, 1.15vw, 1.1rem);
+  line-height: 1.65;
+  color: var(--ssk-on-dark-muted);
+}
+
+.scene__link {
+  justify-self: start;
+  margin-top: 0.4rem;
+}
+
+/* inset image, layered over the full-bleed backdrop */
+.scene__inset {
+  position: absolute;
+  z-index: 2;
+  overflow: hidden;
+  width: clamp(19rem, 30vw, 33rem);
+  aspect-ratio: 4 / 5;
+  max-height: 66vh;
+  top: clamp(10rem, 21vh, 13.5rem);
+  right: var(--gutter);
+  border: 1px solid var(--ssk-line);
+}
+
+.scene__inset img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.scene__inset--wide {
+  aspect-ratio: 4 / 3;
+  width: clamp(22rem, 35vw, 38rem);
+  top: auto;
+  bottom: clamp(2.5rem, 9vh, 5.5rem);
+}
+
+/* Even scenes: mirrored — content right, inset left */
+.scene:nth-child(even) .scene__inset {
+  right: auto;
+  left: var(--gutter);
+  top: clamp(10rem, 21vh, 13.5rem);
+  bottom: auto;
+}
+
+.scene__list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 2.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ssk-on-dark);
+}
+
+.scene__list li::before {
+  content: '';
+  display: inline-block;
+  width: 0.4rem;
+  height: 0.4rem;
+  margin-right: 0.8rem;
+  background: var(--ssk-accent);
+  vertical-align: middle;
+}
+
+/* ---- Stacked fallback: mobile / tablet / reduced motion ----------------- */
+@media (max-width: 1023.98px), (prefers-reduced-motion: reduce) {
+  .exp__stage {
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+  }
+
+  .exp__hud {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    padding: clamp(5rem, 12vw, 8rem) var(--gutter) 2.5rem;
+  }
+
+  .exp__meter {
+    display: none;
+  }
+
+  .scene {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 2rem;
+    min-height: min(46rem, 100svh);
+    padding: 7rem var(--gutter) 3rem;
+  }
+
+  .scene__content,
+  .scene:nth-child(even) .scene__content {
+    position: relative;
+    inset: auto;
+    max-width: 34rem;
+    text-align: left;
+    justify-items: start;
+  }
+
+  .scene__title {
+    font-size: clamp(2.4rem, 11vw, 5.5rem);
+  }
+
+  .scene__inset,
+  .scene__inset--wide,
+  .scene:nth-child(even) .scene__inset {
+    position: relative;
+    inset: auto;
+    max-height: none;
+    width: min(100%, 34rem);
+    aspect-ratio: 4 / 4.5;
+  }
+
+  .scene__shade,
+  .scene:nth-child(even) .scene__shade {
+    background: linear-gradient(0deg, rgba(8, 8, 7, 0.92) 0%, rgba(8, 8, 7, 0.5) 60%, rgba(8, 8, 7, 0.7) 100%);
+  }
+}

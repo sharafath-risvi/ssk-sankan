@@ -1,0 +1,572 @@
+/* ==========================================================================
+   SSK FOOTER — CINEMATIC ARCHITECTURAL CLOSING STATEMENT
+   Shared across all SSK routes. Combines an editorial pre-footer CTA band,
+   structured 4-column directory, monumental typographic mark, and colophon.
+   ========================================================================== */
+
+.ssk-footer {
+  --footer-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --footer-pad-x: clamp(1.5rem, 4.5vw, 5rem);
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--ssk-dark);
+  color: var(--ssk-on-dark);
+  border-top: 1px solid var(--ssk-line);
+  padding: clamp(5rem, 9vw, 8.5rem) var(--footer-pad-x) clamp(2rem, 3.5vw, 3rem);
+}
+
+.ssk-footer__glow {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 82% 14%, rgba(62, 167, 112, 0.12), transparent 46%),
+    radial-gradient(circle at 16% 86%, rgba(244, 242, 238, 0.04), transparent 48%);
+}
+
+.ssk-footer__inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 112rem;
+  margin-inline: auto;
+}
+
+/* ---- Tier 1: Editorial CTA Band ----------------------------------------- */
+.ssk-footer__cta-band {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2.5rem;
+  padding-bottom: clamp(3.25rem, 6vw, 5rem);
+  border-bottom: 1px solid var(--ssk-line);
+}
+
+.ssk-footer__cta-copy {
+  display: grid;
+  gap: 1rem;
+  max-width: 46rem;
+}
+
+.ssk-footer__eyebrow {
+  margin: 0;
+  color: var(--ssk-accent);
+}
+
+.ssk-footer__headline {
+  margin: 0;
+  font-size: clamp(2.4rem, 5.2vw, 4.75rem);
+  font-weight: 700;
+  line-height: 0.94;
+  letter-spacing: -0.045em;
+  text-transform: uppercase;
+  color: var(--ssk-on-dark);
+}
+
+.ssk-footer__headline .is-accent {
+  color: var(--ssk-accent);
+}
+
+.ssk-footer__cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+
+.ssk-footer__primary-btn,
+.ssk-footer__secondary-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.15rem 1.85rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    color 0.48s var(--footer-ease),
+    border-color 0.48s var(--footer-ease),
+    transform 0.48s var(--footer-ease),
+    box-shadow 0.48s var(--footer-ease);
+}
+
+.ssk-footer__primary-btn {
+  border: 1px solid var(--ssk-accent);
+  background: var(--ssk-accent);
+  color: var(--ssk-dark);
+}
+
+.ssk-footer__primary-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--ssk-on-dark);
+  transform: translateY(102%);
+  transition: transform 0.52s var(--footer-ease);
+}
+
+.ssk-footer__primary-btn:hover,
+.ssk-footer__primary-btn:focus-visible {
+  border-color: var(--ssk-on-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 32px -12px rgba(62, 167, 112, 0.45);
+}
+
+.ssk-footer__primary-btn:hover::before,
+.ssk-footer__primary-btn:focus-visible::before {
+  transform: translateY(0%);
+}
+
+.ssk-footer__secondary-btn {
+  border: 1px solid rgba(244, 242, 238, 0.28);
+  background: rgba(244, 242, 238, 0.03);
+  color: var(--ssk-on-dark);
+}
+
+.ssk-footer__secondary-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: rgba(244, 242, 238, 0.1);
+  transform: translateY(102%);
+  transition: transform 0.52s var(--footer-ease);
+}
+
+.ssk-footer__secondary-btn:hover,
+.ssk-footer__secondary-btn:focus-visible {
+  border-color: var(--ssk-accent);
+  color: var(--ssk-accent);
+  transform: translateY(-2px);
+}
+
+.ssk-footer__secondary-btn:hover::before,
+.ssk-footer__secondary-btn:focus-visible::before {
+  transform: translateY(0%);
+}
+
+.ssk-footer__btn-icon {
+  transition: transform 0.45s var(--footer-ease);
+}
+
+.ssk-footer__primary-btn:hover .ssk-footer__btn-icon,
+.ssk-footer__primary-btn:focus-visible .ssk-footer__btn-icon,
+.ssk-footer__secondary-btn:hover .ssk-footer__btn-icon,
+.ssk-footer__secondary-btn:focus-visible .ssk-footer__btn-icon {
+  transform: translate(3px, -3px);
+}
+
+/* ---- Tier 2: 4-Column Architectural Directory --------------------------- */
+.ssk-footer__top {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) repeat(3, minmax(0, 1fr));
+  gap: clamp(2.5rem, 4.5vw, 4.5rem);
+  padding: clamp(3.25rem, 6vw, 5rem) 0;
+}
+
+.ssk-footer__intro {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
+
+.ssk-footer__brand-lockup {
+  display: flex;
+  align-items: center;
+}
+
+.ssk-footer__logo-link {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  transition: transform 0.4s var(--nav-ease, ease);
+}
+
+.ssk-footer__logo-link:hover {
+  transform: translateX(2px);
+}
+
+.ssk-footer__logo-img {
+  height: clamp(2.4rem, 3.2vw, 3.1rem);
+  width: auto;
+  max-width: min(280px, 85vw);
+  object-fit: contain;
+  display: block;
+  transition: transform 0.35s ease;
+}
+
+.ssk-footer__logo-link:hover .ssk-footer__logo-img {
+  transform: scale(1.02);
+}
+
+.ssk-footer__brand {
+  margin: 0;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.2rem;
+  font-size: clamp(1.85rem, 2.4vw, 2.3rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.ssk-footer__brand-dot {
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background: var(--ssk-accent);
+}
+
+.ssk-footer__brand-sub {
+  padding-left: 0.9rem;
+  border-left: 1px solid var(--ssk-line);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ssk-on-dark-muted);
+}
+
+.ssk-footer__tag {
+  margin: 0;
+  max-width: 24rem;
+  font-size: clamp(1.04rem, 1.2vw, 1.2rem);
+  font-weight: 400;
+  line-height: 1.65;
+  color: rgba(244, 242, 238, 0.8);
+}
+
+.ssk-footer__location-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.55rem 0.95rem;
+  border: 1px solid var(--ssk-line);
+  background: rgba(244, 242, 238, 0.03);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ssk-on-dark-muted);
+}
+
+.ssk-footer__location-pill svg {
+  color: var(--ssk-accent);
+  flex: none;
+}
+
+.ssk-footer__col-title {
+  margin: 0 0 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ssk-on-dark-muted);
+}
+
+.ssk-footer__col-title span {
+  color: var(--ssk-accent);
+  font-weight: 700;
+}
+
+.ssk-footer__list {
+  display: grid;
+  gap: 0.8rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ssk-footer__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-block: 0.15rem;
+  color: rgba(244, 242, 238, 0.86);
+  font-size: clamp(0.95rem, 1.05vw, 1.06rem);
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.38s var(--footer-ease), transform 0.38s var(--footer-ease);
+}
+
+.ssk-footer__link-arrow {
+  opacity: 0;
+  transform: translate(-4px, 4px);
+  color: var(--ssk-accent);
+  transition: opacity 0.38s var(--footer-ease), transform 0.38s var(--footer-ease);
+}
+
+.ssk-footer__link:hover,
+.ssk-footer__link:focus-visible {
+  color: var(--ssk-on-dark);
+  transform: translateX(5px);
+}
+
+.ssk-footer__link:hover .ssk-footer__link-arrow,
+.ssk-footer__link:focus-visible .ssk-footer__link-arrow {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+.ssk-footer__link.is-sankan {
+  color: var(--ssk-accent);
+}
+
+.ssk-footer__social-wrap {
+  margin: 0 0 1.5rem;
+}
+
+.ssk-footer__instagram-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  border: 1px solid var(--ssk-line);
+  background: rgba(244, 242, 238, 0.04);
+  color: var(--ssk-accent);
+  transition:
+    transform 0.35s ease,
+    border-color 0.35s ease,
+    background-color 0.35s ease,
+    color 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.ssk-footer__instagram-btn:hover,
+.ssk-footer__instagram-btn:focus-visible {
+  color: #fff;
+  background: rgba(244, 242, 238, 0.12);
+  border-color: var(--ssk-accent);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+}
+
+.ssk-footer__regions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0 0 1.4rem;
+  padding: 0;
+  list-style: none;
+}
+
+.ssk-footer__region-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.42rem 0.8rem;
+  border: 1px solid var(--ssk-line);
+  background: rgba(244, 242, 238, 0.03);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ssk-on-dark);
+}
+
+.ssk-footer__region-dot {
+  width: 0.34rem;
+  height: 0.34rem;
+  border-radius: 50%;
+  background: var(--ssk-accent);
+}
+
+.ssk-footer__note {
+  margin: 0 0 1.4rem;
+  max-width: 21rem;
+  font-size: 0.94rem;
+  line-height: 1.65;
+  color: var(--ssk-on-dark-muted);
+}
+
+.ssk-footer__note a {
+  color: var(--ssk-on-dark);
+  text-decoration: underline;
+  text-underline-offset: 0.24em;
+  transition: color 0.3s;
+}
+
+.ssk-footer__note a:hover,
+.ssk-footer__note a:focus-visible {
+  color: var(--ssk-accent);
+}
+
+.ssk-footer__enquire {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--ssk-accent);
+  color: var(--ssk-accent);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: gap 0.45s var(--footer-ease), color 0.35s var(--footer-ease);
+}
+
+.ssk-footer__enquire:hover,
+.ssk-footer__enquire:focus-visible {
+  gap: 1.05rem;
+  color: var(--ssk-on-dark);
+}
+
+/* ---- Tier 3: Monumental Wordmark Stage ---------------------------------- */
+.ssk-footer__stage {
+  position: relative;
+  padding-top: clamp(1.5rem, 3vw, 2.5rem);
+  border-top: 1px solid var(--ssk-line);
+  overflow: hidden;
+}
+
+.ssk-footer__stage-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(244, 242, 238, 0.38);
+}
+
+.ssk-footer__mark {
+  margin: 0;
+  font-size: clamp(7.5rem, 28vw, 31rem);
+  font-weight: 700;
+  line-height: 0.78;
+  letter-spacing: -0.065em;
+  text-align: center;
+  user-select: none;
+  overflow: hidden;
+}
+
+.ssk-footer__mark-text {
+  display: block;
+  color: transparent;
+  background: linear-gradient(
+    180deg,
+    rgba(244, 242, 238, 0.16) 0%,
+    rgba(62, 167, 112, 0.08) 55%,
+    rgba(244, 242, 238, 0.02) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-stroke: 1.25px rgba(244, 242, 238, 0.22);
+}
+
+/* ---- Tier 4: Bottom Colophon -------------------------------------------- */
+.ssk-footer__bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--ssk-line);
+  font-size: 0.82rem;
+  color: var(--ssk-on-dark-muted);
+}
+
+.ssk-footer__copy {
+  margin: 0;
+}
+
+.ssk-footer__bottom-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.5rem 2.25rem;
+}
+
+.ssk-footer__sister-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--ssk-on-dark-muted);
+  text-decoration: none;
+  transition: color 0.35s var(--footer-ease);
+}
+
+.ssk-footer__sister-link:hover,
+.ssk-footer__sister-link:focus-visible {
+  color: var(--ssk-accent);
+}
+
+.ssk-footer__top-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 0.9rem;
+  border: 1px solid var(--ssk-line);
+  background: rgba(244, 242, 238, 0.03);
+  color: var(--ssk-on-dark);
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    border-color 0.35s var(--footer-ease),
+    background-color 0.35s var(--footer-ease),
+    color 0.35s var(--footer-ease),
+    transform 0.35s var(--footer-ease);
+}
+
+.ssk-footer__top-btn:hover,
+.ssk-footer__top-btn:focus-visible {
+  border-color: var(--ssk-accent);
+  background: rgba(62, 167, 112, 0.14);
+  color: var(--ssk-accent);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 1023.98px) {
+  .ssk-footer__top {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .ssk-footer__intro {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 599.98px) {
+  .ssk-footer__cta-actions {
+    width: 100%;
+  }
+
+  .ssk-footer__primary-btn,
+  .ssk-footer__secondary-btn {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .ssk-footer__top {
+    grid-template-columns: 1fr;
+  }
+
+  .ssk-footer__stage-meta {
+    display: none;
+  }
+}

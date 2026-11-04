@@ -1,0 +1,145 @@
+/* ==========================================================================
+   SSK — Brand Showcase (Services & Service Detail pages)
+   Clean, minimal horizontal arrangement of 4-5 temporary brand placeholders.
+   ========================================================================== */
+
+.ssk-brands {
+  position: relative;
+  background: var(--ssk-surface);
+  color: var(--ssk-ink);
+  padding: clamp(3.5rem, 6.5vw, 5.5rem) var(--gutter);
+  border-bottom: 1px solid rgba(26, 25, 23, 0.08);
+}
+
+.ssk-brands__inner {
+  width: min(100%, 82rem);
+  margin: 0 auto;
+}
+
+.ssk-brands__head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.65rem;
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+.ssk-brands__tagline {
+  color: var(--ssk-accent-ink);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.ssk-brands__tagline::before,
+.ssk-brands__tagline::after {
+  content: '';
+  display: inline-block;
+  vertical-align: middle;
+  width: 1.8rem;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.45;
+  margin: 0 0.75rem;
+}
+
+.ssk-brands__heading {
+  font-size: clamp(1.6rem, 3.2vw, 2.75rem);
+  line-height: 1.1;
+  letter-spacing: -0.035em;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--ssk-ink);
+}
+
+/* Horizontal balanced layout */
+.ssk-brands__track {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .ssk-brands__track {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .ssk-brands__track {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+.ssk-brands__item {
+  display: flex;
+}
+
+.ssk-brands__card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: clamp(1.4rem, 2.2vw, 1.85rem) 1rem;
+  background: #ffffff;
+  border: 1px solid rgba(26, 25, 23, 0.08);
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(11, 11, 10, 0.03);
+  transition: transform 0.25s var(--ease), border-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
+}
+
+.ssk-brands__card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(200, 75, 49, 0.35);
+  box-shadow: 0 10px 24px rgba(11, 11, 10, 0.06);
+}
+
+.ssk-brands__icon-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin-bottom: 0.85rem;
+  border-radius: 50%;
+  background: var(--ssk-surface);
+  border: 1px solid rgba(26, 25, 23, 0.1);
+  transition: background-color 0.25s var(--ease), border-color 0.25s var(--ease);
+}
+
+.ssk-brands__card:hover .ssk-brands__icon-box {
+  background: rgba(200, 75, 49, 0.08);
+  border-color: rgba(200, 75, 49, 0.4);
+}
+
+.ssk-brands__initials {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--ssk-accent-ink);
+}
+
+.ssk-brands__name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ssk-ink);
+  line-height: 1.2;
+}
+
+.ssk-brands__sub {
+  margin-top: 0.35rem;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ssk-muted);
+}
+

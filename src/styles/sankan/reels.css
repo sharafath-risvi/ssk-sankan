@@ -1,0 +1,261 @@
+/* ==========================================================================
+   SANKAN — Instagram Reels
+   Replaces "Why Sankan". Deep violet field, large vertical panels, no generic card grid.
+   ========================================================================== */
+
+.sn-reels {
+  position: relative;
+  background: var(--sn-violet-dark);
+  color: var(--sn-white);
+  padding: clamp(5rem, 11vw, 9rem) 0 clamp(5rem, 10vw, 8rem);
+  overflow: hidden;
+}
+
+.sn-reels__inner {
+  width: min(100%, 90rem);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.sn-reels__head {
+  display: grid;
+  gap: 1.6rem;
+  margin-bottom: clamp(2.5rem, 6vw, 4.5rem);
+}
+
+.sn-reels__title {
+  display: grid;
+  gap: 1.1rem;
+}
+
+.sn-reels .sn-reels__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+  color: var(--sn-lavender-2);
+}
+
+.sn-reels .sn-reels__eyebrow::before {
+  content: '';
+  width: 2.75rem;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.7;
+}
+
+.sn .sn-reels h2 {
+  color: var(--sn-white);
+}
+
+.sn-reels__aside {
+  display: grid;
+  gap: 1.5rem;
+  align-content: end;
+  justify-items: start;
+}
+
+.sn .sn-reels .sn-prose {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.sn-reels__note {
+  max-width: 30rem;
+  color: var(--sn-lavender-2);
+  font-size: 0.85rem;
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+}
+
+/* Mobile: a swipe row of tall panels */
+.sn-reels__list {
+  display: flex;
+  gap: 0.9rem;
+  margin: 0 calc(var(--gutter) * -1);
+  padding: 0 var(--gutter) 0.5rem;
+  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--gutter);
+  -webkit-overflow-scrolling: touch;
+}
+
+.sn-reel {
+  flex: 0 0 min(76vw, 21rem);
+  scroll-snap-align: start;
+  margin: 0;
+}
+
+.sn-reel__media {
+  position: relative;
+  display: block;
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  background: #3b1c3d;
+  color: var(--sn-white);
+  text-decoration: none;
+}
+
+.sn-reel__media img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sn-reel__veil {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(0deg, rgba(36, 14, 38, 0.86) 0%, rgba(36, 14, 38, 0.12) 46%, rgba(36, 14, 38, 0) 70%),
+    linear-gradient(180deg, rgba(36, 14, 38, 0.3) 0%, rgba(36, 14, 38, 0) 22%);
+}
+
+.sn-reel__badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.38);
+  background: rgba(36, 14, 38, 0.45);
+  color: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  transition:
+    transform 0.35s ease,
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease;
+}
+
+.sn-reel__play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  padding-left: 0.18rem;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
+  background: rgba(36, 14, 38, 0.45);
+  color: var(--sn-white);
+  backdrop-filter: blur(8px);
+  z-index: 2;
+}
+
+.sn-reel__meta {
+  position: absolute;
+  inset: auto 0 0 0;
+  display: grid;
+  gap: 0.55rem;
+  padding: 1.4rem 1.3rem 1.5rem;
+}
+
+.sn-reel__no {
+  color: var(--sn-lavender-2);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.sn-reel__name {
+  font-size: clamp(1.35rem, 2vw, 1.75rem);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+}
+
+.sn-reel__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+a.sn-reel__media:focus-visible {
+  outline: 2px solid var(--sn-white);
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .sn-reel__media img {
+    transition: transform 1s var(--ease);
+  }
+
+  .sn-reel__play {
+    transition: transform 0.6s var(--ease), background-color 0.4s ease, color 0.4s ease, box-shadow 0.4s ease;
+  }
+
+  .sn-reel__cta {
+    transition: color 0.4s ease, transform 0.6s var(--ease);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .sn-reel__media:hover img {
+    transform: scale(1.06);
+  }
+
+  a.sn-reel__media:hover .sn-reel__badge {
+    background: rgba(255, 255, 255, 0.24);
+    border-color: rgba(255, 255, 255, 0.8);
+    color: #fff;
+    transform: scale(1.1);
+  }
+
+  a.sn-reel__media:hover .sn-reel__play {
+    background: var(--sn-white);
+    color: var(--sn-violet);
+    transform: translate(-50%, -50%) scale(1.14);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+  }
+
+  a.sn-reel__media:hover .sn-reel__cta {
+    color: var(--sn-white);
+    transform: translateX(0.25rem);
+  }
+}
+
+@media (min-width: 768px) {
+  .sn-reels__head {
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.85fr);
+    align-items: end;
+    gap: clamp(2rem, 6vw, 6rem);
+  }
+
+  .sn-reels__list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+    gap: clamp(1.2rem, 2.5vw, 2.2rem);
+    margin: 0;
+    padding: 0 0 clamp(2rem, 5vw, 4rem);
+    overflow: visible;
+    scroll-snap-type: none;
+  }
+
+  .sn-reel {
+    flex: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .sn-reels__list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1.5rem, 2.6vw, 2.5rem);
+  }
+}
