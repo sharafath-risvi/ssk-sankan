@@ -224,4 +224,22 @@
   .material__title {
     font-size: clamp(2.7rem, 13vw, 6rem);
   }
+
+  @media (max-width: 480px) {
+    .material {
+      padding: 2.5rem var(--gutter) 3.5rem;
+      gap: 1.85rem;
+    }
+
+    .material__title {
+      font-size: clamp(1.95rem, 9.8vw, 2.85rem);
+      line-height: 0.98;
+      word-break: break-word;
+    }
+
+    .material__detail {
+      width: clamp(5.5rem, 24vw, 7rem);
+      bottom: -0.85rem;
+    }
+  }
 }

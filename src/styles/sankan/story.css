@@ -26,32 +26,66 @@
   display: none;
 }
 
-/* --------------------------------------------------------------- Mobile / Stacked Layout (< 1024px) */
-.sn-about__mobile-intro {
+/* Desktop presentation isolation (>= 1024px) */
+@media (min-width: 1024px) {
+  .sn-story__mobile {
+    display: none !important;
+  }
+  .sn-story__desktop {
+    display: block;
+  }
+}
+
+/* Mobile presentation isolation (< 1024px) */
+@media (max-width: 1023.98px) {
+  .sn-story__desktop {
+    display: none !important;
+  }
+  .sn-story__mobile {
+    display: block;
+  }
+}
+
+/* --------------------------------------------------------------- Mobile Storytelling Layout (< 1024px) */
+.sn-story__mobile {
   position: relative;
   width: 100%;
-  min-height: 52svh;
+}
+
+.sn-mstory__scene {
+  position: relative;
+  width: 100%;
+  height: 100svh;
+  min-height: 100svh;
+  overflow: hidden;
+  background: var(--sn-white);
+  isolation: isolate;
+}
+
+/* Stage 1: Full-Screen Architectural Intro Image & "ABOUT SANKAN" */
+.sn-mstory__intro {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
   display: flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
-  padding: 4.5rem var(--gutter) 3rem;
-  margin-bottom: 2.5rem;
-  border-radius: 16px;
   overflow: hidden;
-  background: var(--sn-violet-dark);
+  background: #18091a;
+  will-change: opacity, transform;
 }
 
-.sn-about__mobile-intro-bg {
+.sn-mstory__intro-bg {
   position: absolute;
   inset: 0;
   z-index: 1;
 }
 
-.sn-about__mobile-intro-bg img {
+.sn-mstory__intro-bg img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
   display: block;
 }
 
@@ -59,58 +93,165 @@
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse at center, rgba(24, 8, 26, 0.14) 0%, rgba(18, 6, 20, 0.42) 100%),
-    linear-gradient(180deg, rgba(18, 6, 20, 0.28) 0%, transparent 35%, rgba(18, 6, 20, 0.38) 100%);
+    radial-gradient(ellipse at center, rgba(24, 8, 26, 0.18) 0%, rgba(18, 6, 20, 0.52) 100%),
+    linear-gradient(180deg, rgba(18, 6, 20, 0.35) 0%, transparent 35%, rgba(18, 6, 20, 0.45) 100%);
   pointer-events: none;
 }
 
-.sn-about__mobile-intro-content {
+.sn-mstory__intro-content {
   position: relative;
   z-index: 3;
-  color: #ffffff;
+  padding: 0 var(--gutter);
+  text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
+  will-change: transform, opacity;
 }
 
-.sn .sn-about__mobile-intro-content .sn-about__intro-title {
-  color: #ffffff;
-  background: linear-gradient(180deg, #ffffff 65%, var(--sn-lavender) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-size: clamp(3.4rem, 13vw, 5.5rem);
+.sn .sn-mstory__intro-title {
+  margin: 0;
   font-family: var(--font-sora);
+  font-size: clamp(2.8rem, 12vw, 4.6rem);
   font-weight: 800;
   line-height: 0.90;
-  letter-spacing: -0.045em;
+  letter-spacing: -0.05em;
   text-transform: uppercase;
-  margin: 0;
-  filter: drop-shadow(0 10px 28px rgba(0, 0, 0, 0.75));
+  color: #ffffff;
+  background: linear-gradient(180deg, #ffffff 60%, var(--sn-lavender) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 14px 36px rgba(18, 6, 20, 0.85));
 }
 
-.sn-about__mobile-media {
+/* Stage 2 & 3: Showcase Layer (Pinned Video 01 at top + 3 Sequential Chapters below) */
+.sn-mstory__showcase {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
   display: flex;
-  justify-content: center;
-  margin-bottom: clamp(2.5rem, 6vw, 4rem);
+  flex-direction: column;
+  background: var(--sn-white);
+  padding-top: clamp(3.8rem, 8vh, 5rem);
+  padding-bottom: clamp(0.75rem, 2vh, 1.25rem);
+  overflow: hidden;
+  will-change: transform, opacity;
 }
 
-.sn-about__mobile-frame {
+/* Top Video 01 Frame */
+.sn-mstory__video-wrap {
   position: relative;
-  width: min(92vw, 28rem);
-  max-height: 75svh;
-  aspect-ratio: 9 / 14;
+  width: min(calc(100% - var(--gutter) * 2), 24.5rem);
+  margin-inline: auto;
+  aspect-ratio: 16 / 9.5;
   border-radius: 14px;
   overflow: hidden;
-  box-shadow: 0 1.5rem 3.5rem rgba(73, 36, 74, 0.18);
-  border: 1px solid var(--sn-lavender-2);
-  background: #000;
+  background: #18091a;
+  box-shadow: 0 14px 34px -8px rgba(77, 28, 80, 0.32);
+  flex-shrink: 0;
 }
 
-.sn-about__mobile-video {
+.sn-mstory__video {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
   display: block;
+}
+
+/* Progress Meter */
+.sn-mstory__meter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  margin-top: clamp(0.85rem, 2.2vh, 1.4rem);
+  margin-bottom: clamp(0.75rem, 1.8vh, 1.2rem);
+  flex-shrink: 0;
+}
+
+.sn-mstory__dot {
+  display: block;
+  width: 1.6rem;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--sn-violet);
+  opacity: 0.25;
+  transform-origin: center;
+}
+
+/* Chapters Stage Container */
+.sn-mstory__stage-wrap {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  max-width: 32rem;
+  margin-inline: auto;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Individual Chapter Stage (Only one visible at a time) */
+.sn-mstage {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: clamp(0.35rem, 1vh, 0.75rem) var(--gutter) 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  will-change: transform, opacity;
+}
+
+.sn-mstage__label {
+  margin: 0 0 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(77, 28, 80, 0.7);
+}
+
+.sn .sn-mstage__title {
+  margin: 0 0 clamp(0.5rem, 1.3vh, 0.8rem);
+  font-family: var(--font-sora);
+  font-size: clamp(1.35rem, 5.5vw, 1.95rem);
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  font-weight: 700;
+  color: var(--sn-violet);
+}
+
+.sn-mstage__text {
+  margin: 0 0 clamp(0.65rem, 1.6vh, 1rem);
+  font-size: clamp(0.84rem, 2.4vw, 0.94rem);
+  line-height: 1.55;
+  color: #443e43;
+}
+
+.sn-mstage__relation {
+  max-width: 100%;
+  margin-top: 0.15rem;
+}
+
+.sn-mstage__relation .sn-relation__row {
+  padding: 0.55rem 0;
+}
+
+.sn-mstage__relation .sn-relation__visit {
+  margin-top: 0.65rem;
+  min-height: 38px;
+  padding: 0.45rem 0.95rem;
+}
+
+.sn-mstage__content {
+  margin-top: 0.15rem;
+}
+
+.sn-mstage__content .sn-tags li {
+  padding: 0.45rem 0.8rem;
+  font-size: 0.72rem;
 }
 
 .sn-about__copy {
@@ -141,7 +282,7 @@
 
 .sn .sn-stage__title {
   font-family: var(--font-sora);
-  font-size: clamp(2.4rem, 8.6vw, 4.4rem);
+  font-size: clamp(1.95rem, 7.8vw, 3.2rem);
   line-height: 0.94;
   letter-spacing: -0.045em;
   font-weight: 700;
@@ -203,6 +344,8 @@
   margin-top: 1.1rem;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  min-height: 44px;
   gap: 0.4rem;
   font-size: 0.74rem;
   font-weight: 600;
@@ -211,7 +354,7 @@
   color: var(--sn-violet);
   text-decoration: none;
   white-space: nowrap;
-  padding: 0.45rem 0.85rem;
+  padding: 0.55rem 1rem;
   border: 1px solid var(--sn-violet);
   border-radius: 4px;
   transition: background-color 0.2s ease, color 0.2s ease;

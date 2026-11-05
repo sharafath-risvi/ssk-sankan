@@ -77,28 +77,7 @@ const SskFooter = () => {
       <div className="ssk-footer__glow" aria-hidden="true" />
 
       <div className="ssk-footer__inner">
-        {/* Tier 1: Cinematic Final Statement & CTA Band */}
-        <div className="ssk-footer__cta-band js-ssk-footer-reveal">
-          <div className="ssk-footer__cta-copy">
-            <p className="eyebrow ssk-footer__eyebrow">Built on Precision · South India</p>
-            <h2 className="ssk-footer__headline">
-              Precision at <span className="is-accent">every edge.</span>
-            </h2>
-          </div>
-
-          <div className="ssk-footer__cta-actions">
-            <Link to="/contact" className="ssk-footer__primary-btn">
-              <span>Start an Enquiry</span>
-              <ArrowUpRight size={18} className="ssk-footer__btn-icon" aria-hidden="true" />
-            </Link>
-            <Link to="/sankan" state={{ fromSSK: true }} className="ssk-footer__secondary-btn">
-              <span>Explore Sankan</span>
-              <ArrowUpRight size={16} className="ssk-footer__btn-icon" aria-hidden="true" />
-            </Link>
-          </div>
-        </div>
-
-        {/* Tier 2: Editorial 4-Column Directory */}
+        {/* Editorial 4-Column Directory */}
         <div className="ssk-footer__top">
           <div className="ssk-footer__intro js-ssk-footer-reveal">
             <div className="ssk-footer__brand-lockup">

@@ -41,11 +41,10 @@ const MissionVision = () => {
   return (
     <section ref={root} className="amv bg-[color:var(--ssk-light)] text-[color:var(--ssk-dark)]">
       <div className="amv__inner">
-        <div className="amv__grid">
-          
+        {/* Desktop Pin Layout (>= 1024px) */}
+        <div className="amv__grid amv__grid--desktop">
           <div className="amv__content-col">
             <div className="amv__content-wrapper">
-              
               <div className="amv__block js-mv-mission-content">
                 <div className="js-mv-mission-inner">
                   <p className="ssk-eyebrow amv__eyebrow">Our Mission</p>
@@ -63,13 +62,11 @@ const MissionVision = () => {
                   </p>
                 </div>
               </div>
-
             </div>
           </div>
           
           <div className="amv__media-col">
             <div className="amv__media-wrapper">
-              
               <div className="amv__media js-mv-vision-img">
                 <img src={ABOUT_IMG.vision.src} alt={ABOUT_IMG.vision.alt} />
               </div>
@@ -77,10 +74,37 @@ const MissionVision = () => {
               <div className="amv__media amv__media--top js-mv-mission-img">
                 <img src={ABOUT_IMG.mission.src} alt={ABOUT_IMG.mission.alt} />
               </div>
-
             </div>
           </div>
-          
+        </div>
+
+        {/* Mobile Adapted Layout (< 1024px): Preserves exact card design & visual pairing */}
+        <div className="amv__mobile">
+          <div className="amv__mcard">
+            <div className="amv__mcard-content">
+              <p className="ssk-eyebrow amv__eyebrow">Our Mission</p>
+              <p className="amv__text ssk-h-sub">
+                To supply top-quality materials and precise edge banding that make interior work easier, stronger, and more beautiful for our customers.
+              </p>
+            </div>
+            <div className="amv__mcard-media">
+              <img src={ABOUT_IMG.mission.src} alt={ABOUT_IMG.mission.alt} />
+            </div>
+          </div>
+
+          <div className="amv__mcard-divider" aria-hidden="true" />
+
+          <div className="amv__mcard">
+            <div className="amv__mcard-content">
+              <p className="ssk-eyebrow amv__eyebrow">Our Vision</p>
+              <p className="amv__text ssk-h-sub">
+                To be South India's most trusted name for interior materials, known by every woodworker and homeowner for honest quality and helpful service.
+              </p>
+            </div>
+            <div className="amv__mcard-media">
+              <img src={ABOUT_IMG.vision.src} alt={ABOUT_IMG.vision.alt} />
+            </div>
+          </div>
         </div>
       </div>
     </section>

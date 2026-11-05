@@ -850,6 +850,32 @@
   border-color: rgba(62, 167, 112, 0.45);
 }
 
+@media (max-width: 767.98px) {
+  .chero {
+    height: auto;
+    min-height: 100svh;
+  }
+
+  .chero__inner {
+    padding: clamp(6.5rem, 15vh, 8.5rem) var(--gutter) clamp(2rem, 5vh, 3.5rem);
+    gap: 2rem;
+  }
+
+  .chero__bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+
+  .cmain {
+    padding: clamp(4rem, 10vw, 6rem) var(--gutter);
+  }
+
+  .cform-card {
+    padding: clamp(1.4rem, 4vw, 2.5rem);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .ssk-contact-page *,
   .ssk-contact-page *::before,

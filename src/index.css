@@ -1,6 +1,12 @@
 @import "tailwindcss";
 
 @layer base {
+  html,
+  body {
+    max-width: 100%;
+    overflow-x: clip;
+  }
+
   body {
     transition: background-color 0.6s ease, color 0.6s ease;
   }

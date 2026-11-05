@@ -277,8 +277,8 @@
 
 /* ==========================================================================
    MOBILE & TABLET PRESENTATION (< 1024px)
-   - Single video card with Chapter 01 and Chapter 02 sequential story
-   - Continuous blurred Video 01 background glow
+   - Full-Screen Cinematic Storytelling with Video 01 & Video 02
+   - Seamless vertical flow without desktop squeeze
    ========================================================================== */
 .hero__mobile {
   display: none;
@@ -290,125 +290,213 @@
   }
 
   .hero__mobile {
-    display: grid;
-    grid-template-columns: 1fr;
-    background: var(--ssk-dark);
-  }
-
-  .hero__mcard {
-    position: relative;
-    padding: clamp(5.5rem, 14vw, 7.5rem) var(--gutter) clamp(4rem, 10vw, 5.5rem);
     display: flex;
     flex-direction: column;
-    align-items: center;
-    overflow: hidden;
-    isolation: isolate;
+    background: var(--ssk-dark);
+    position: relative;
+    width: 100%;
   }
 
-  /* Ambient glow behind mobile frame */
-  .hero__mambient {
+  .hero__mscene {
+    position: relative;
+    width: 100%;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
+    isolation: isolate;
+    padding-top: clamp(6.5rem, 15vh, 8.5rem);
+  }
+
+  /* Full Bleed Background Video Container */
+  .hero__mscene-media {
     position: absolute;
-    inset: -10%;
+    inset: 0;
     z-index: 1;
     overflow: hidden;
+  }
+
+  .hero__mscene-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    background: #080807;
+  }
+
+  /* Cinematic Scrim: deep at top and bottom for flawless typography readability */
+  .hero__mscene-scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: linear-gradient(
+      180deg,
+      rgba(11, 11, 10, 0.72) 0%,
+      rgba(11, 11, 10, 0.25) 35%,
+      rgba(11, 11, 10, 0.45) 60%,
+      rgba(11, 11, 10, 0.94) 100%
+    );
     pointer-events: none;
   }
 
-  .hero__mambient-video {
-    width: 120%;
-    height: 120%;
-    object-fit: cover;
-    filter: blur(36px) saturate(1.25) brightness(0.72);
-    transform: scale(1.08);
-    opacity: 1;
-  }
-
-  .hero__mscrim {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, rgba(11, 11, 10, 0.35) 0%, rgba(11, 11, 10, 0.6) 100%);
-  }
-
-  /* Card content */
-  .hero__mframe-wrap {
-    position: relative;
-    z-index: 3;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-bottom: clamp(1.75rem, 4.5vw, 2.5rem);
-  }
-
-  .hero__mframe {
-    position: relative;
-    width: min(88vw, 26rem);
-    max-height: 75svh;
-    aspect-ratio: 9 / 14.8;
-    border-radius: 14px;
-    overflow: hidden;
-    background: #000;
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    box-shadow: 0 1.6rem 3.8rem rgba(0, 0, 0, 0.82);
-  }
-
-  .hero__mvideo {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    background: #050505;
-  }
-
-  .hero__mbody {
+  .hero__mscene-content {
     position: relative;
     z-index: 3;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: clamp(1.15rem, 2.6vh, 1.55rem);
-    max-width: min(38rem, 92vw);
-    text-align: center;
+    justify-content: flex-end;
+    gap: clamp(1.2rem, 3vh, 1.8rem);
+    padding: clamp(2.5rem, 6vh, 4rem) var(--gutter) clamp(2.5rem, 6vh, 3.5rem);
+    width: 100%;
+    max-width: 44rem;
+    margin-inline: auto;
   }
 
-  .hero__mbody .hero__eyebrow {
-    font-size: clamp(0.8rem, 2.2vw, 0.92rem);
+  .hero__mchapter-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    width: fit-content;
+    padding: 0.45rem 0.95rem;
+    border-radius: 999px;
+    background: rgba(11, 11, 10, 0.65);
+    border: 1px solid rgba(244, 242, 238, 0.22);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ssk-on-dark);
+  }
+
+  .hero__mchapter-dot {
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 50%;
+    background: var(--ssk-accent);
+    box-shadow: 0 0 8px rgba(62, 167, 112, 0.7);
+  }
+
+  .hero__mchapter-dot.is-accent {
+    background: #4ec285;
+    box-shadow: 0 0 8px rgba(78, 194, 133, 0.8);
+  }
+
+  .hero__mscene-header {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.75rem, 1.8vh, 1.15rem);
+  }
+
+  .hero__mscene-header .hero__eyebrow {
+    font-size: clamp(0.78rem, 2.2vw, 0.9rem);
     font-weight: 700;
-    letter-spacing: 0.28em;
-    margin-bottom: 0.25rem;
+    letter-spacing: 0.26em;
+    color: var(--ssk-accent);
+    margin: 0;
   }
 
   .hero__mtitle {
     margin: 0;
     font-family: var(--font-display);
-    font-size: clamp(2.15rem, 7.8vw, 3.4rem);
+    font-size: clamp(2.2rem, 8.8vw, 3.4rem);
     font-weight: 700;
-    line-height: 1.02;
+    line-height: 0.98;
     letter-spacing: -0.04em;
     text-transform: uppercase;
-    color: var(--ssk-on-dark);
+    text-wrap: balance;
+    color: #ffffff;
+    filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.9));
   }
 
   .hero__mlede {
     margin: 0;
-    font-size: clamp(1.02rem, 2.5vw, 1.18rem);
-    line-height: 1.68;
-    color: rgba(244, 242, 238, 0.88);
+    font-size: clamp(1rem, 2.5vw, 1.16rem);
+    line-height: 1.62;
+    color: rgba(244, 242, 238, 0.92);
+    max-width: 35rem;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.75));
   }
 
-  /* Elegant Divider between Chapter 01 and Chapter 02 on Mobile */
-  .hero__mchapter-divider {
+  .hero__mscene-footer {
+    padding-top: clamp(0.5rem, 1.5vh, 1.25rem);
+    display: flex;
+    align-items: center;
+  }
+
+  .hero__mscroll-cue {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.85rem;
+    text-decoration: none;
+    color: rgba(244, 242, 238, 0.85);
+    font-size: 0.76rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+  }
+
+  .hero__mscroll-cue:hover,
+  .hero__mscroll-cue:focus-visible {
+    color: var(--ssk-accent);
+  }
+
+  .hero__mscroll-track {
     position: relative;
-    z-index: 3;
-    width: 100%;
-    max-width: min(38rem, 92vw);
-    height: 1px;
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      rgba(255, 255, 255, 0.15) 25%,
-      rgba(62, 167, 112, 0.55) 50%,
-      rgba(255, 255, 255, 0.15) 75%,
-      transparent 100%
-    );
-    margin: clamp(2.5rem, 6vw, 3.5rem) 0;
+    width: 2.5rem;
+    height: 2px;
+    background: rgba(244, 242, 238, 0.24);
+    overflow: hidden;
+  }
+
+  .hero__mscroll-pip {
+    position: absolute;
+    inset: 0;
+    background: var(--ssk-accent);
+    transform-origin: left;
+    animation: hero-mscroll-slide 2.2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+  }
+
+  @keyframes hero-mscroll-slide {
+    0% { transform: scaleX(0); transform-origin: left; }
+    50% { transform: scaleX(1); transform-origin: left; }
+    50.1% { transform: scaleX(1); transform-origin: right; }
+    100% { transform: scaleX(0); transform-origin: right; }
+  }
+
+  .hero__mcta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.95rem 1.6rem;
+    border-radius: 4px;
+    background: var(--ssk-accent);
+    color: var(--ssk-dark);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-decoration: none;
+    box-shadow: 0 8px 24px -4px rgba(62, 167, 112, 0.5);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+  }
+
+  .hero__mcta-btn:hover,
+  .hero__mcta-btn:focus-visible {
+    transform: translateY(-2px);
+    background: #4ec285;
+  }
+
+  @media (max-width: 480px) {
+    .hero__mtitle {
+      font-size: clamp(1.95rem, 8.4vw, 2.6rem);
+    }
+    .hero__mscene-content {
+      padding: clamp(2rem, 5vh, 3rem) var(--gutter) clamp(2rem, 5vh, 2.75rem);
+      gap: 1.1rem;
+    }
   }
 }

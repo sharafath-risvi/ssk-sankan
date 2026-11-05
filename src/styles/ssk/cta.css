@@ -101,15 +101,40 @@
 @media (max-width: 767.98px) {
   .cta {
     min-height: auto;
-    padding: clamp(5rem, 10vh, 7rem) var(--gutter, 1.25rem);
+    padding: clamp(4.5rem, 10vh, 6.5rem) var(--gutter, 1.25rem);
   }
 
   .cta__title {
-    font-size: clamp(2.32rem, 10.6vw, 4.28rem);
+    font-size: clamp(2.1rem, 9.8vw, 3.8rem);
     line-height: 0.94;
   }
 
   .cta__title .line:nth-child(2) {
-    padding-left: clamp(1rem, 5vw, 3rem);
+    padding-left: clamp(0.75rem, 4vw, 2.5rem);
+  }
+
+  .cta__row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+
+  .cta__buttons {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .cta__buttons .btn {
+    width: 100%;
+    justify-content: space-between;
+    min-height: 3.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .cta__title {
+    font-size: clamp(1.85rem, 9vw, 2.85rem);
   }
 }

@@ -77,7 +77,7 @@ const Hero = () => {
         </div>
         
         <h1 className="ahero__title ssk-h-hero js-ahero-line">
-          <Lines lines={['Built on Quality.', 'Driven by Trust.']} accent={1} />
+          <Lines lines={['Built on Quality.', 'Driven by Trust.']} />
         </h1>
         
         <div className="ahero__bottom js-ahero-fade">
@@ -85,8 +85,9 @@ const Hero = () => {
             We supply quality edge banding, calibrated plywood and interior materials for furniture makers and builders across South India.
           </p>
           <a href="#story" className="ahero__scroll">
+            <span className="ahero__scroll-text">Explore our story</span>
             <span className="sr-only">Scroll down</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
               <path d="M12 4v16m0 0l-6-6m6 6l6-6" />
             </svg>
           </a>

@@ -537,8 +537,8 @@ export default function Sankan() {
             className="sn-drawer__ssk"
           >
             <div>
-              <span className="sn-drawer__ssk-eyebrow">Parent Company</span>
-              <span className="sn-drawer__ssk-title">Back to SSK Enterprises</span>
+              <span className="sn-drawer__ssk-eyebrow">Explore SSK</span>
+              <span className="sn-drawer__ssk-title">SSK Enterprises</span>
             </div>
             <ArrowUpRight size={20} aria-hidden="true" />
           </Link>

@@ -164,19 +164,99 @@
 
 
 @media (max-width: 1023.98px) {
+  .afounder {
+    padding: clamp(4.5rem, 10vw, 7rem) 0;
+  }
+
   .afounder__grid {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 3.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(2.5rem, 6vw, 3.5rem);
+  }
+
+  /* 1. Founder image first on mobile */
+  .afounder__portrait-col {
+    order: 1;
+    width: 100%;
+  }
+
+  /* 2. Founder content below the image on mobile */
+  .afounder__content {
+    order: 2;
+    width: 100%;
+    max-width: none;
   }
 
   .afounder__figure {
-    margin-inline: 0;
-    max-width: 34rem;
+    width: min(100%, 22rem);
+    max-width: 85vw;
+    margin-inline: auto;
+  }
+
+  .afounder__portrait {
+    aspect-ratio: 4 / 5;
+    border-radius: 8px;
+  }
+
+  .afounder__eyebrow {
+    font-size: clamp(0.78rem, 2.2vw, 0.88rem);
+    margin-bottom: 0.85rem;
+  }
+
+  .afounder__name {
+    font-size: clamp(2.35rem, 8.8vw, 3.8rem);
+    line-height: 0.95;
+  }
+
+  .afounder__role {
+    font-size: clamp(0.85rem, 2.4vw, 0.98rem);
+    margin-top: 0.85rem;
+    letter-spacing: 0.18em;
+  }
+
+  .afounder__rule {
+    margin: clamp(1.25rem, 2.5vh, 1.75rem) 0;
+  }
+
+  .afounder__quote {
+    font-size: clamp(1.15rem, 3.6vw, 1.35rem);
+    line-height: 1.55;
+    padding-left: 1.25rem;
+  }
+
+  .afounder__bio {
+    gap: 1.15rem;
+    margin-top: clamp(1.25rem, 2.5vh, 1.75rem);
+  }
+
+  .afounder__bio-p {
+    font-size: clamp(1rem, 2.6vw, 1.14rem);
+    line-height: 1.7;
   }
 }
 
 @media (max-width: 599.98px) {
   .afounder__frame-offset {
     inset: 0.55rem -0.55rem -0.55rem 0.55rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .afounder {
+    padding: 4rem 0;
+  }
+
+  .afounder__name {
+    font-size: clamp(2.15rem, 8.8vw, 3.2rem);
+  }
+
+  .afounder__quote {
+    font-size: clamp(1.08rem, 3.8vw, 1.25rem);
+    padding-left: 1.15rem;
+  }
+
+  .afounder__bio-p {
+    font-size: 0.98rem;
+    line-height: 1.68;
   }
 }

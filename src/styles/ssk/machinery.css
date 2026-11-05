@@ -340,7 +340,8 @@
   .mpanel,
   .mpanel--intro,
   .mpanel--machine,
-  .mpanel--machine.is-flip {
+  .mpanel--machine.is-flip,
+  .mpanel--machine.is-flip.mpanel--throughfeed {
     display: grid;
     grid-template-columns: 1fr;
     width: auto;
@@ -361,16 +362,48 @@
     margin-top: 0;
   }
 
+  .mpanel__media,
   .mpanel--machine.is-flip .mpanel__media {
-    order: 0;
-  }
-
-  .mpanel__frame {
-    max-height: none;
+    order: 1;
+    width: 100%;
   }
 
   .mpanel__body {
+    order: 2;
+    width: 100%;
     gap: clamp(1.25rem, 3vw, 1.85rem);
+  }
+
+  /* Consistent image sizing across all machines on mobile */
+  .mpanel__frame,
+  .mpanel--beamsa .mpanel__frame,
+  .mpanel--throughfeed .mpanel__frame,
+  .mpanel--press .mpanel__frame {
+    width: 100%;
+    max-width: 100%;
+    aspect-ratio: 16 / 10;
+    max-height: none;
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--ssk-dark);
+  }
+
+  .mpanel__drift,
+  .mpanel--beamsa .mpanel__drift,
+  .mpanel--throughfeed .mpanel__drift,
+  .mpanel--press .mpanel__drift {
+    inset: 0;
+    padding: 0;
+  }
+
+  .mpanel__drift img,
+  .mpanel--beamsa .mpanel__drift img,
+  .mpanel--throughfeed .mpanel__drift img,
+  .mpanel--press .mpanel__drift img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
   }
 
   .mpanel__title {
@@ -389,6 +422,36 @@
 
   .mpanel__specs {
     max-width: 38rem;
+  }
+
+  @media (max-width: 480px) {
+    .mpanel,
+    .mpanel--intro,
+    .mpanel--machine,
+    .mpanel--machine.is-flip {
+      padding: 3rem var(--gutter);
+      gap: 1.85rem;
+    }
+
+    .mpanel__title {
+      font-size: clamp(1.85rem, 8.5vw, 2.75rem);
+      line-height: 1;
+      word-break: break-word;
+    }
+
+    .mach .mach__intro-title {
+      font-size: clamp(2.15rem, 10.5vw, 3.4rem);
+      line-height: 0.96;
+    }
+
+    .mpanel__specs {
+      font-size: 0.76rem;
+      gap: 0.45rem;
+    }
+
+    .mpanel__specs dt {
+      max-width: 55%;
+    }
   }
 }
 

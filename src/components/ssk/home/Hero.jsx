@@ -26,7 +26,7 @@ export default function Hero() {
   // Continuous ambient background video ref (Video 01)
   const bgV1Ref = useRef(null)
 
-  // Mobile video ref
+  // Mobile video ref (Video 01 only on mobile)
   const mobV1Ref = useRef(null)
 
   useLayoutEffect(() => {
@@ -197,24 +197,22 @@ export default function Hero() {
     })
 
     // -------------------------------------------------------------------------
-    // Mobile / Tablet (< 1024px, motion allowed): Single Video + Sequential Chapters
+    // Mobile / Tablet (< 1024px, motion allowed): Video 01 Autoplay/Pause
     // -------------------------------------------------------------------------
     mm.add(`${MOTION} and (max-width: 1023.98px)`, () => {
       safePause(v1)
       safePlay(bgV1)
 
       const io = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            const vid = entry.target
-            if (entry.isIntersecting) {
-              safePlay(vid)
-            } else {
-              safePause(vid)
-            }
-          })
+        ([entry]) => {
+          if (!mobV1) return
+          if (entry.isIntersecting) {
+            safePlay(mobV1)
+          } else {
+            safePause(mobV1)
+          }
         },
-        { threshold: 0.2 },
+        { threshold: 0.15 },
       )
       if (mobV1) io.observe(mobV1)
 
@@ -321,59 +319,51 @@ export default function Hero() {
 
       {/* =====================================================================
           MOBILE & TABLET PRESENTATION (< 1024px)
-          - Single video card with Chapter 01 and Chapter 02 sequential story
-          - True 9:16 preserved footage with blurred ambient glow
+          - Single Video 01 opening experience
+          - Content: Chapter 01 ("Quality Materials. Better Spaces.")
+          - Clean scroll cue directly to #about
           ===================================================================== */}
       <div className="hero__mobile">
-        <article className="hero__mcard">
-          <div className="hero__mambient" aria-hidden="true">
+        <section className="hero__mscene" aria-label="SSK Enterprises">
+          <div className="hero__mscene-media" aria-hidden="true">
             <video
-              className="hero__mambient-video"
+              ref={mobV1Ref}
+              className="hero__mscene-video"
               src={VIDEO_01}
-              poster="/aboutssk/founder.png"
               autoPlay
               muted
               loop
               playsInline
               preload="auto"
             />
-            <div className="hero__mscrim" />
+            <div className="hero__mscene-scrim" />
           </div>
 
-          <div className="hero__mframe-wrap">
-            <div className="hero__mframe">
-              <video
-                ref={mobV1Ref}
-                className="hero__mvideo"
-                src={VIDEO_01}
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="auto"
-              />
-              <div className="hero__screen-glare" aria-hidden="true" />
+          <div className="hero__mscene-content">
+            <div className="hero__mscene-header">
+              <p className="eyebrow hero__eyebrow">SSK ENTERPRISES</p>
+              <h1 id="hero-title-mobile" className="hero__mtitle">
+                Quality Materials.<br />Better Spaces.
+              </h1>
+              <p className="hero__mlede">
+                We provide quality materials for interior and furniture work, helping people create beautiful and lasting spaces.
+              </p>
+            </div>
+
+            <div className="hero__mscene-footer">
+              <a
+                href="#about"
+                className="hero__mscroll-cue"
+                aria-label="Scroll to discover our story"
+              >
+                <span className="hero__mscroll-label">Scroll to Explore</span>
+                <span className="hero__mscroll-track">
+                  <span className="hero__mscroll-pip" />
+                </span>
+              </a>
             </div>
           </div>
-
-          <div className="hero__mbody">
-            <p className="eyebrow hero__eyebrow">SSK ENTERPRISES</p>
-            <h2 className="hero__mtitle">Quality Materials. Better Spaces.</h2>
-            <p className="hero__mlede">
-              We provide quality materials for interior and furniture work, helping people create beautiful and lasting spaces.
-            </p>
-          </div>
-
-          <div className="hero__mchapter-divider" aria-hidden="true" />
-
-          <div className="hero__mbody">
-            <p className="eyebrow hero__eyebrow">MATERIALS &amp; PRECISION</p>
-            <h2 className="hero__mtitle">Built For Quality. Made To Last.</h2>
-            <p className="hero__mlede">
-              From edge banding tapes and strong adhesives to calibrated plywood and laminates, we supply the reliable products makers trust every day.
-            </p>
-          </div>
-        </article>
+        </section>
       </div>
     </section>
   )

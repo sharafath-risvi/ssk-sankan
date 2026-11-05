@@ -56,6 +56,10 @@
   margin-top: clamp(2.6rem, 5vh, 3.8rem);
 }
 
+.sn-hero__mobile-cta {
+  display: none;
+}
+
 .sn-hero__btn-primary {
   display: inline-flex;
   align-items: center;
@@ -256,34 +260,46 @@
 
 /* ---------------------------------------------------- Tablet (768px - 1023px) */
 @media (max-width: 1023.98px) and (min-width: 768px) {
+  .sn-hero-split {
+    height: 100svh;
+    min-height: 48rem;
+    display: flex;
+  }
+
   .sn-hero__left {
-    width: 55%;
-    padding: 6.5rem clamp(8rem, calc(9.5vw + 3rem), 10.5rem) 4rem clamp(2.2rem, 4.5vw, 4rem);
+    width: 54%;
+    padding: 7rem clamp(2rem, 4vw, 3.5rem) 4rem clamp(2.5rem, 5vw, 4.5rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   .sn-hero__right {
-    width: 45%;
+    width: 46%;
+    height: 100%;
   }
 
   .sn-hero__content {
-    max-width: clamp(20rem, 34vw, 27rem);
+    max-width: clamp(20rem, 34vw, 25rem);
   }
 
   .sn-hero__heading {
-    font-size: clamp(3rem, 5.5vw, 4.4rem);
+    font-size: clamp(2.8rem, 5.2vw, 4.2rem);
+    line-height: 0.94;
   }
 
   .sn-hero__actions {
-    margin-top: clamp(2.2rem, 4vh, 3rem);
+    margin-top: clamp(2rem, 4vh, 2.75rem);
   }
 
   .sn-hero__float {
-    left: 55%;
-    top: 42%;
+    left: 70%;
+    top: 48%;
+    transform: translate(-50%, -50%);
   }
 
   .sn-hero__float-card {
-    width: clamp(170px, 19vw, 210px);
+    width: clamp(150px, 17vw, 190px);
   }
 
   .sn-hero__scroll {
@@ -296,15 +312,19 @@
 @media (max-width: 767.98px) {
   .sn-hero-split {
     height: auto;
-    min-height: 100svh;
+    min-height: 0;
     flex-direction: column;
     overflow-x: hidden;
+    padding-bottom: clamp(1.85rem, 4.5vw, 2.75rem);
+    background: #ffffff;
   }
 
   .sn-hero__left {
     width: 100%;
     height: auto;
-    padding: 7rem var(--gutter) 2.5rem;
+    padding: clamp(4.6rem, 11vw, 5.4rem) var(--gutter) clamp(1.1rem, 2.8vw, 1.5rem);
+    justify-content: flex-start;
+    text-align: left;
   }
 
   .sn-hero__content {
@@ -312,36 +332,71 @@
   }
 
   .sn-hero__heading {
-    font-size: clamp(2.8rem, 10.5vw, 4.2rem);
+    font-size: clamp(2.75rem, 11.5vw, 4.2rem);
+    font-weight: 800;
+    line-height: 0.92;
+    letter-spacing: -0.05em;
+    text-wrap: balance;
   }
 
+  /* Hide actions in left panel on mobile; Let's Talk CTA is placed below the main video */
   .sn-hero__actions {
-    margin-top: 2.2rem;
+    display: none !important;
   }
 
-  .sn-hero__btn-primary {
-    width: 100%;
-    justify-content: center;
-  }
-
+  /* Main video: enhanced height, visually immersive, preserving clean presentation */
   .sn-hero__right {
-    width: 100%;
-    height: 52svh;
-    min-height: 22rem;
+    width: calc(100% - var(--gutter) * 2);
+    margin-inline: auto;
+    height: auto;
+    aspect-ratio: 16 / 11.5;
+    min-height: 0;
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    background: #18091a;
+    box-shadow: 0 18px 42px -10px rgba(77, 28, 80, 0.35);
   }
 
-  .sn-hero__float {
+  .sn-hero__video-container {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+
+  .sn-hero__video--main {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 38%;
+  }
+
+  /* Mobile CTA: positioned at bottom of main video, centered, easy to tap */
+  .sn-hero__mobile-cta {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: clamp(1.35rem, 3.8vw, 1.85rem);
+    padding: 0 var(--gutter);
     position: relative;
-    left: auto;
-    top: auto;
-    transform: none;
-    margin: -3.2rem auto 2.5rem;
     z-index: 10;
   }
 
-  .sn-hero__float-card {
-    width: min(68vw, 14.5rem);
-    aspect-ratio: 9 / 14;
+  .sn-hero__mobile-cta .sn-hero__btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    min-width: 12rem;
+    min-height: 3.25rem;
+    padding: 1rem 2.3rem;
+    border-radius: 999px;
+    font-size: 0.88rem;
+  }
+
+  /* Completely hide floating video and remove all its space/margins on mobile */
+  .sn-hero__float {
+    display: none !important;
   }
 
   .sn-hero__scroll {

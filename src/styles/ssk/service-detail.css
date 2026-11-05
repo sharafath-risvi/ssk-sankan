@@ -432,6 +432,28 @@
   }
 }
 
+@media (max-width: 767.98px) {
+  .svch {
+    height: auto;
+    min-height: 100svh;
+  }
+
+  .svch__inner {
+    padding: clamp(6.5rem, 15vh, 8.5rem) var(--gutter) clamp(2rem, 5vh, 3.5rem);
+    gap: 2rem;
+  }
+
+  .svcrow {
+    padding: 3.5rem 0;
+    gap: 1.75rem;
+  }
+
+  .svcrow__title {
+    font-size: clamp(2rem, 8.4vw, 3.2rem);
+    line-height: 0.98;
+  }
+}
+
 @media (max-width: 599.98px) {
   .svch__bottom {
     flex-direction: column;

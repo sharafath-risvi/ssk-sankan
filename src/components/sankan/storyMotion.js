@@ -207,11 +207,31 @@ export function setupStoryPinned(q, scene) {
   }
 }
 
-/* Tablet, mobile and reduced-motion stacked page */
+/* Mobile storytelling: pinned 3-stage vertical sequence (< 1024px)
+   - Stage 1: Full-Screen Architectural Intro Image & "ABOUT SANKAN"
+   - Stage 2: Intro smoothly animates out, Video 01 enters from bottom and settles at top
+   - Stage 3: Video 01 remains pinned and playing while Chapters 01, 02, and 03 appear
+              individually in sequence below it
+   - Unpins cleanly into #services */
 export function setupStoryStacked(q) {
-  const mobVideo = q('.sn-about__mobile-video')[0]
+  const scene = q('.js-mstory-scene')[0]
+  if (!scene) return
+
+  const intro = q('.js-mstory-intro')[0]
+  const introContent = q('.js-mstory-intro-content')[0]
+  const showcase = q('.js-mstory-showcase')[0]
+  const mobVideo = q('.js-mstory-video')[0]
+  const dots = q('.js-mstory-dot')
+  const stages = [
+    q('.js-mstage-0')[0],
+    q('.js-mstage-1')[0],
+    q('.js-mstage-2')[0],
+  ]
 
   if (mobVideo) {
+    mobVideo.currentTime = 0
+    safePlay(mobVideo)
+
     const io = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -220,22 +240,103 @@ export function setupStoryStacked(q) {
           safePause(mobVideo)
         }
       },
-      { threshold: 0.2 },
+      { threshold: 0.15 },
     )
     io.observe(mobVideo)
   }
 
-  q('.sn-stage').forEach((stage) => {
-    const lines = stage.querySelectorAll('.line__inner')
-    const rest = stage.querySelectorAll('.js-stage-rest')
+  // Initial states
+  if (intro) gsap.set(intro, { autoAlpha: 1 })
+  if (introContent) gsap.set(introContent, { autoAlpha: 1, y: 0 })
+  if (showcase) gsap.set(showcase, { autoAlpha: 0, yPercent: 42 })
 
-    const tl = gsap.timeline({ scrollTrigger: { trigger: stage, start: 'top 82%', once: true } })
-    tl.fromTo(lines, { yPercent: 118 }, { yPercent: 0, duration: 1.1, stagger: 0.1, ease: 'power4.out' }, 0)
-    tl.fromTo(
-      rest,
-      { y: 30, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.85, stagger: 0.1, ease: 'power3.out' },
-      0.25,
-    )
+  // Stage 01 visible initially inside showcase; Stages 02 and 03 hidden
+  if (stages[0]) gsap.set(stages[0], { autoAlpha: 1, y: 0 })
+  if (stages[1]) gsap.set(stages[1], { autoAlpha: 0, y: 22 })
+  if (stages[2]) gsap.set(stages[2], { autoAlpha: 0, y: 22 })
+
+  if (dots.length) {
+    gsap.set(dots[0], { opacity: 1, scaleX: 1.45 })
+    if (dots[1]) gsap.set(dots[1], { opacity: 0.25, scaleX: 1 })
+    if (dots[2]) gsap.set(dots[2], { opacity: 0.25, scaleX: 1 })
+  }
+
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: scene,
+      start: 'top top',
+      end: '+=300%',
+      pin: true,
+      pinSpacing: true,
+      scrub: 0.65,
+      anticipatePin: 1,
+      invalidateOnRefresh: true,
+      onUpdate: () => {
+        if (mobVideo && mobVideo.paused) safePlay(mobVideo)
+      },
+    },
   })
+
+  // 1. Stage 1 -> Stage 2: Intro slides/fades out, Showcase (Video 01 + Chapter 01) enters smoothly
+  // 0.0 to 1.6: Intro content and background smoothly fade & glide out
+  tl.to({}, { duration: 0.4 }, 0)
+  if (introContent) {
+    tl.to(introContent, { autoAlpha: 0, y: -36, duration: 1.1, ease: 'power2.in' }, 0.4)
+  }
+  if (intro) {
+    tl.to(intro, { autoAlpha: 0, duration: 1.35, ease: 'power2.inOut' }, 0.55)
+  }
+
+  // Video 01 + showcase rises smoothly from bottom into place
+  if (showcase) {
+    tl.fromTo(
+      showcase,
+      { autoAlpha: 0, yPercent: 42 },
+      { autoAlpha: 1, yPercent: 0, duration: 1.5, ease: 'power3.out' },
+      0.75,
+    )
+  }
+
+  // Hold on Chapter 01 (Relationship)
+  tl.to({}, { duration: 1.8 }, 2.3)
+
+  // 2. Transition Chapter 01 -> Chapter 02 (What We Do)
+  if (stages[0]) {
+    tl.to(stages[0], { autoAlpha: 0, y: -20, duration: 0.65, ease: 'power2.in' }, 4.1)
+  }
+  if (stages[1]) {
+    tl.fromTo(
+      stages[1],
+      { autoAlpha: 0, y: 20 },
+      { autoAlpha: 1, y: 0, duration: 0.75, ease: 'power3.out' },
+      4.6,
+    )
+  }
+  if (dots[0] && dots[1]) {
+    tl.to(dots[0], { opacity: 0.25, scaleX: 1, duration: 0.35 }, 4.3)
+    tl.to(dots[1], { opacity: 1, scaleX: 1.45, duration: 0.35 }, 4.6)
+  }
+
+  // Hold on Chapter 02
+  tl.to({}, { duration: 1.8 }, 5.4)
+
+  // 3. Transition Chapter 02 -> Chapter 03 (The Sankan Way)
+  if (stages[1]) {
+    tl.to(stages[1], { autoAlpha: 0, y: -20, duration: 0.65, ease: 'power2.in' }, 7.2)
+  }
+  if (stages[2]) {
+    tl.fromTo(
+      stages[2],
+      { autoAlpha: 0, y: 20 },
+      { autoAlpha: 1, y: 0, duration: 0.75, ease: 'power3.out' },
+      7.7,
+    )
+  }
+  if (dots[1] && dots[2]) {
+    tl.to(dots[1], { opacity: 0.25, scaleX: 1, duration: 0.35 }, 7.4)
+    tl.to(dots[2], { opacity: 1, scaleX: 1.45, duration: 0.35 }, 7.7)
+  }
+
+  // Hold on Chapter 03 before unpinning cleanly into #services
+  tl.to({}, { duration: 1.8 }, 8.5)
 }

@@ -1,4 +1,5 @@
-import { ArrowUpRight, Play } from 'lucide-react'
+import { useState, useEffect, useRef } from 'react'
+import { ArrowLeft, ArrowRight, ArrowUpRight, Play } from 'lucide-react'
 import InstagramIcon from '../shared/InstagramIcon'
 import Lines from '../shared/Lines'
 import { CONTACT, REELS } from './data'
@@ -14,6 +15,37 @@ import { CONTACT, REELS } from './data'
  */
 export default function Reels() {
   const profile = CONTACT.instagramUrl
+  const listRef = useRef(null)
+  const [canScrollLeft, setCanScrollLeft] = useState(false)
+  const [canScrollRight, setCanScrollRight] = useState(true)
+
+  const checkScroll = () => {
+    const list = listRef.current
+    if (!list) return
+    const { scrollLeft, scrollWidth, clientWidth } = list
+    setCanScrollLeft(scrollLeft > 10)
+    setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10)
+  }
+
+  useEffect(() => {
+    const list = listRef.current
+    if (!list) return
+    checkScroll()
+    list.addEventListener('scroll', checkScroll, { passive: true })
+    window.addEventListener('resize', checkScroll)
+    return () => {
+      list.removeEventListener('scroll', checkScroll)
+      window.removeEventListener('resize', checkScroll)
+    }
+  }, [])
+
+  const scrollByCard = (direction) => {
+    const list = listRef.current
+    if (!list) return
+    const card = list.querySelector('.sn-reel')
+    const step = card ? card.offsetWidth + 14 : list.clientWidth * 0.8
+    list.scrollBy({ left: direction * step, behavior: 'smooth' })
+  }
 
   return (
     <section id="reels" className="sn-reels" aria-labelledby="sn-reels-title">
@@ -39,7 +71,7 @@ export default function Reels() {
           </div>
         </header>
 
-        <ul className="sn-reels__list">
+        <ul ref={listRef} className="sn-reels__list">
           {REELS.map((reel, i) => {
             const inner = (
               <>
@@ -86,6 +118,28 @@ export default function Reels() {
             )
           })}
         </ul>
+
+        {/* Mobile-only Arrow Navigation Controls */}
+        <div className="sn-reels__controls" aria-label="Reels carousel navigation">
+          <button
+            type="button"
+            className="sn-reels__arrow sn-reels__arrow--prev"
+            onClick={() => scrollByCard(-1)}
+            disabled={!canScrollLeft}
+            aria-label="Scroll to previous reel"
+          >
+            <ArrowLeft size={18} aria-hidden="true" />
+          </button>
+          <button
+            type="button"
+            className="sn-reels__arrow sn-reels__arrow--next"
+            onClick={() => scrollByCard(1)}
+            disabled={!canScrollRight}
+            aria-label="Scroll to next reel"
+          >
+            <ArrowRight size={18} aria-hidden="true" />
+          </button>
+        </div>
       </div>
     </section>
   )

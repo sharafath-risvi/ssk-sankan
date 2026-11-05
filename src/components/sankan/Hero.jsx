@@ -2,7 +2,7 @@ import { useLayoutEffect, useRef } from 'react'
 import { useLocation } from 'react-router-dom'
 import { ArrowUpRight } from 'lucide-react'
 import Lines from '../shared/Lines'
-import { gsap, MOTION } from '../../utils/gsap'
+import { gsap, PINNED } from '../../utils/gsap'
 import '../../styles/sankan/hero.css'
 
 const VIDEO_02 = '/sankanvideos/video2.mp4'
@@ -44,7 +44,8 @@ export default function Hero() {
 
     const mm = gsap.matchMedia()
 
-    mm.add(MOTION, () => {
+    /* Desktop pinned scene entrance (>= 1024px) */
+    mm.add(PINNED, () => {
       const leftPanel = q('.js-hero-left')[0]
       const rightPanel = q('.js-hero-right')[0]
       const floatCard = q('.js-hero-float')[0]
@@ -107,6 +108,35 @@ export default function Hero() {
       tl.to(scrollIndicator, { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, 1.28)
     })
 
+    /* Tablet and Mobile stacked layout entrance (< 1024px) */
+    mm.add('(max-width: 1023.98px) and (prefers-reduced-motion: no-preference)', () => {
+      const leftPanel = q('.js-hero-left')[0]
+      const rightPanel = q('.js-hero-right')[0]
+      const floatCard = q('.js-hero-float')[0]
+      const headlineLines = q('.js-hero-heading .line__inner')
+      const ctaButtons = q('.js-hero-btn')
+      const scrollIndicator = q('.js-hero-scroll')[0]
+
+      gsap.set(leftPanel, { opacity: 0, y: 20 })
+      gsap.set(rightPanel, { opacity: 0, y: 28, scale: 0.98 })
+      if (floatCard) gsap.set(floatCard, { scale: 0.88, opacity: 0, y: 24 })
+      gsap.set(headlineLines, { yPercent: 115 })
+      gsap.set(ctaButtons, { opacity: 0, y: 15 })
+      if (scrollIndicator) gsap.set(scrollIndicator, { opacity: 0, y: 12 })
+
+      const tl = gsap.timeline({
+        delay: 1.85,
+        defaults: { ease: 'power3.out' },
+      })
+
+      tl.to(leftPanel, { opacity: 1, y: 0, duration: 0.9 }, 0)
+      tl.to(headlineLines, { yPercent: 0, duration: 0.95, stagger: 0.08, ease: 'power4.out' }, 0.2)
+      tl.to(rightPanel, { opacity: 1, y: 0, scale: 1, duration: 1.05, ease: 'power3.out' }, 0.35)
+      tl.to(ctaButtons, { opacity: 1, y: 0, duration: 0.65, stagger: 0.1 }, 0.55)
+      if (floatCard) tl.to(floatCard, { scale: 1, opacity: 1, y: 0, duration: 0.95, ease: 'back.out(1.12)' }, 0.65)
+      if (scrollIndicator) tl.to(scrollIndicator, { opacity: 1, y: 0, duration: 0.6 }, 0.85)
+    })
+
     return () => mm.revert()
   }, [fromSSK])
 
@@ -152,6 +182,14 @@ export default function Hero() {
           <div className="sn-hero__video-glare" aria-hidden="true" />
           <div className="sn-hero__video-shade" aria-hidden="true" />
         </div>
+      </div>
+
+      {/* MOBILE ONLY: "Let's Talk" CTA positioned below the main video */}
+      <div className="sn-hero__mobile-cta js-hero-mobile-cta">
+        <a href="#contact" className="sn-btn sn-hero__btn-primary js-hero-btn">
+          Let&rsquo;s Talk
+          <ArrowUpRight size={16} aria-hidden="true" />
+        </a>
       </div>
 
       {/* CENTRE FLOATING VIDEO: ALSO VIDEO 02 (NOMA Inspired) */}

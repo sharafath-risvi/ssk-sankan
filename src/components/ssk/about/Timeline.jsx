@@ -73,8 +73,8 @@ const Timeline = () => {
           <p className="ssk-eyebrow text-[color:var(--ssk-muted)]" data-reveal="fade" data-dir="up">Company Milestones</p>
         </div>
 
-        <div className="atime__grid">
-          
+        {/* Desktop Pin Layout (>= 1024px) */}
+        <div className="atime__grid atime__grid--desktop">
           <div className="atime__visuals">
             <div className="atime__media-wrapper">
               {MILESTONES.map((m, i) => (
@@ -101,7 +101,36 @@ const Timeline = () => {
               ))}
             </div>
           </div>
+        </div>
 
+        {/* Mobile Visual Timeline (< 1024px): Adapts full visual design with line, photos, and milestones */}
+        <div className="atime__mobile">
+          <div className="atime__mtrack">
+            <div className="atime__mtrack-line" />
+          </div>
+
+          <div className="atime__mitems">
+            {MILESTONES.map((m, i) => (
+              <article key={i} className="atime__mitem">
+                <div className="atime__mnode" aria-hidden="true">
+                  <span className="atime__mnode-dot" />
+                </div>
+
+                <div className="atime__mcard">
+                  <div className="atime__mcard-head">
+                    <span className="atime__myear">{m.year}</span>
+                    <h3 className="atime__mtitle">{m.title}</h3>
+                  </div>
+
+                  <div className="atime__mmedia">
+                    <img src={m.img.src} alt={m.img.alt} loading="lazy" />
+                  </div>
+
+                  <p className="atime__mdesc">{m.desc}</p>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
 
       </div>

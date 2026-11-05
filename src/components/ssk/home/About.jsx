@@ -2,32 +2,23 @@ import { useLayoutEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowUpRight } from 'lucide-react'
 import { gsap, ScrollTrigger, PINNED } from '../../../utils/gsap'
-import { setupReveals } from '../../../utils/reveals'
 import { IMG } from '../../../assets/ssk/images'
 import Lines from '../../shared/Lines'
 
-/* Tablet / mobile: natural scroll, simplified depth, same story. */
-const STACKED_MOTION = '(max-width: 1023.98px) and (prefers-reduced-motion: no-preference)'
-
 /* ---------------------------------------------------------------------------
-   Three images are used in this section:
-   - MAIN (IMG.companyOne) is the single large company image shown during the
-     initial scroll animation, centered, and reduced into the middle slot.
-   - TOP (IMG.workingOne) and BOTTOM (IMG.workingTwo) are revealed once the
-     main company image becomes smaller in the center.
+   Images used in About SSK:
+   - MAIN (IMG.companyOne) is the single large company image.
+     On Desktop: rises, holds, shrinks to center slot.
+     On Mobile: the ONLY image shown. Rises from bottom, settles into focus,
+     with content revealing naturally below it.
+   - TOP (IMG.workingOne) and BOTTOM (IMG.workingTwo) are used EXCLUSIVELY
+     on Desktop in the 3D perspective composition.
    ------------------------------------------------------------------------ */
 const MAIN = IMG.companyOne
 const TOP = IMG.workingOne
 const BOTTOM = IMG.workingTwo
 
-/* Desktop timeline layout, in timeline units (scrubbed directly by scroll ticker):
-   Phase 01  0.00 → 0.20  Tagline, heading, and description are all visible together from the start
-   Phase 02  0.20 → 0.46  Intro text disappears cleanly before the rising image reaches it
-   Phase 03  0.20 → 1.75  Large company image rises from the bottom of the screen to the center
-   Phase 04  1.75 → 2.60  Large company image holds at the center with full building visibility
-   Phase 05  2.60 → 7.20  Large company image smoothly reduces into the center slot
-             3.29 → 6.97  Top and bottom images reveal in 3D perspective
-             6.65 → 8.80  Left heading and right copy settle alongside the final 3-image stack */
+/* Desktop timeline layout constants */
 const GATE = 2.6
 const SHRINK_DUR = 4.6
 const DURATION = 9.4
@@ -44,7 +35,8 @@ export default function About() {
     const mm = gsap.matchMedia()
 
     /* ===================================================================
-       Desktop: pinned, scroll-driven sequence
+       DESKTOP (>= 1024px, motion allowed): Pinned 3D Scrub Sequence
+       LOCKED & APPROVED — 100% UNTOUCHED
        =================================================================== */
     mm.add(PINNED, () => {
       const stage = q('.js-a3-stage')[0]
@@ -61,6 +53,8 @@ export default function About() {
       const headLines = q('.js-a3-head .line__inner')
       const headFades = q('.js-a3-head-fade')
       const bodyItems = q('.js-a3-body > *')
+
+      if (!stage || !intro || !main) return
 
       // The intro is duplicated by the final heading; keep assistive tech on one.
       intro.setAttribute('aria-hidden', 'true')
@@ -284,39 +278,96 @@ export default function About() {
     })
 
     /* ===================================================================
-       Tablet / mobile: natural scroll. Intro text is visible together
-       immediately; single company image and surrounding cards reveal on scroll.
+       MOBILE & TABLET (< 1024px, motion allowed):
+       3-STAGE SIMPLIFIED STORYTELLING EXPERIENCE
+       Stage 1: About SSK introduction (tagline, heading, description)
+       Stage 2: Intro disappears; single large company image enters from
+                bottom, rises smoothly, and becomes main visual focus.
+                Preserves exact 1165/1350 aspect ratio, zero cropping.
+       Stage 3: As user continues scrolling, content below the image
+                reveals naturally with perfect alignment & no empty space.
        =================================================================== */
-    mm.add(STACKED_MOTION, () => {
-      setupReveals(el)
+    mm.add('(max-width: 1023.98px) and (prefers-reduced-motion: no-preference)', () => {
+      const mStage = q('.js-a3-m-stage')[0]
+      const mIntro = q('.js-a3-m-intro')[0]
+      const mMedia = q('.js-a3-m-media')[0]
+      const mBody = q('.js-a3-m-body')[0]
+      const mBodyItems = q('.js-a3-m-fade')
 
-      const main = q('.a3__card--main')[0]
+      if (!mStage || !mIntro || !mMedia) return
 
-      gsap.fromTo(
-        main,
-        { y: 60, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.9,
-          ease: 'power3.out',
-          scrollTrigger: { trigger: main, start: 'top 86%', once: true },
-        },
+      // Initial visual states
+      gsap.set(mIntro, { autoAlpha: 1, y: 0 })
+      gsap.set(mMedia, { yPercent: 115, opacity: 0, y: 0 })
+
+      // Pinned Timeline: Stage 1 intro exits -> Stage 2 large image enters & settles
+      const tl = gsap.timeline({ defaults: { ease: 'none' } })
+
+      // Stage 1: Intro smoothly disappears as user scrolls
+      tl.to(
+        mIntro,
+        { autoAlpha: 0, y: -36, duration: 0.35, ease: 'power2.in' },
+        0,
       )
 
-      ;['top', 'bottom'].forEach((k) => {
+      // Stage 2: Single large company image enters from bottom and rises to center
+      tl.to(
+        mMedia,
+        { yPercent: 0, opacity: 1, duration: 0.75, ease: 'power2.out' },
+        0.1,
+      )
+
+      // Hold at center briefly for visual focus
+      tl.to({}, { duration: 0.2 }, 0.85)
+
+      // Transition smoothly toward top of screen to meet content directly below
+      tl.to(
+        mMedia,
+        { y: () => -Math.round(window.innerHeight * 0.10), duration: 0.35, ease: 'power1.out' },
+        0.95,
+      )
+
+      ScrollTrigger.create({
+        trigger: mStage,
+        start: 'top top',
+        end: () => `+=${Math.round(window.innerHeight * 0.75)}`,
+        pin: true,
+        pinSpacing: true,
+        scrub: 0.65,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+        animation: tl,
+      })
+
+      // Stage 3: Smooth reveal of content below the image
+      if (mBody && mBodyItems.length) {
         gsap.fromTo(
-          q(`.a3__card--${k}`)[0],
-          { y: k === 'top' ? 40 : -40, opacity: 0 },
+          mBodyItems,
+          { opacity: 0, y: 24 },
           {
-            y: 0,
             opacity: 1,
-            duration: 0.9,
+            y: 0,
+            duration: 0.75,
+            stagger: 0.1,
             ease: 'power3.out',
-            scrollTrigger: { trigger: main, start: 'top 64%', once: true },
+            scrollTrigger: {
+              trigger: mBody,
+              start: 'top 88%',
+              once: true,
+            },
           },
         )
-      })
+      }
+    })
+
+    /* Mobile Reduced Motion Fallback (< 1024px) */
+    mm.add('(max-width: 1023.98px) and (prefers-reduced-motion: reduce)', () => {
+      const mIntro = q('.js-a3-m-intro')[0]
+      const mMedia = q('.js-a3-m-media')[0]
+      const mBodyItems = q('.js-a3-m-fade')
+      if (mIntro) gsap.set(mIntro, { display: 'none' })
+      if (mMedia) gsap.set(mMedia, { yPercent: 0, opacity: 1, y: 0 })
+      if (mBodyItems.length) gsap.set(mBodyItems, { opacity: 1, y: 0 })
     })
 
     return () => mm.revert()
@@ -324,88 +375,160 @@ export default function About() {
 
   return (
     <section ref={root} id="about" className="a3 on-light" aria-labelledby="about-title">
-      <div className="a3__stage js-a3-stage">
-        {/* Phase 01 — clean white intro: tagline, heading, and description visible together */}
-        <div className="a3__intro js-a3-intro">
-          <p className="eyebrow js-a3-intro-fade">About SSK</p>
-          <p className="a3__intro-title">
-            <Lines lines={['A manufacturer', 'built around', 'the edge.']} accent={2} />
-          </p>
-          <p className="a3__intro-text js-a3-intro-fade">
-            Edge banding, panel processing and the materials that go with it.
-          </p>
+      {/* =====================================================================
+          DESKTOP PRESENTATION (>= 1024px)
+          - Pinned 3-column scroll-driven 3D stack
+          - 100% LOCKED & UNTOUCHED
+          ===================================================================== */}
+      <div className="a3__desktop">
+        <div className="a3__stage js-a3-stage">
+          {/* Phase 01 — clean white intro: tagline, heading, and description visible together */}
+          <div className="a3__intro js-a3-intro">
+            <p className="eyebrow js-a3-intro-fade">About SSK</p>
+            <p className="a3__intro-title">
+              <Lines lines={['A manufacturer', 'built around', 'the edge.']} accent={2} />
+            </p>
+            <p className="a3__intro-text js-a3-intro-fade">
+              Edge banding, panel processing and the materials that go with it.
+            </p>
+          </div>
+
+          {/* Left column (desktop final composition) */}
+          <header className="a3__head js-a3-head">
+            <p className="eyebrow js-a3-head-fade">About SSK</p>
+            <h2 id="about-title" className="a3__title">
+              <Lines lines={['Built', 'around', 'the edge.']} accent={2} />
+            </h2>
+          </header>
+
+          {/* Centre column placeholder: reserves the stack's width in the grid and is
+              measured by GSAP, so the 3D stack can never drift into the text. */}
+          <div className="a3__slot js-a3-slot" aria-hidden="true" />
+
+          {/* Right column */}
+          <div className="a3__body js-a3-body">
+            <p className="a3__lede" data-reveal="fade">
+              SSK is a manufacturing business with edge banding at its core — supported by panel
+              processing and the materials that go with it. We work to the millimetre because the
+              edge is where quality shows.
+            </p>
+
+            <dl className="a3__facts" data-reveal="stagger">
+              <div className="a3__fact">
+                <dt>Regions</dt>
+                <dd>Tamil Nadu, Kerala, Karnataka</dd>
+              </div>
+            </dl>
+
+            <div className="a3__cta" data-reveal="fade" data-y="24">
+              <Link to="/about" className="textlink">
+                Discover our story
+                <ArrowUpRight size={16} aria-hidden="true" />
+              </Link>
+            </div>
+          </div>
+
+          {/* The 3D stack: three panels — top, main (single company image), bottom */}
+          <div className="a3__scene">
+            <div className="a3__world js-a3-world">
+              <figure className="a3__card a3__card--top">
+                <div className="a3__clip">
+                  <img src={TOP.src} width={TOP.width} height={TOP.height} alt={TOP.alt} loading="lazy" decoding="async" />
+                  <span className="a3__shade" aria-hidden="true" />
+                </div>
+              </figure>
+
+              <figure className="a3__card a3__card--main">
+                <span className="a3__shadow js-a3-shadow" aria-hidden="true" />
+                <div className="a3__clip">
+                  <div className="a3__reel js-a3-reel">
+                    <div className="a3__frame js-a3-frame">
+                      <img
+                        className="js-a3-main-img"
+                        src={MAIN.src}
+                        width={MAIN.width}
+                        height={MAIN.height}
+                        alt={MAIN.alt}
+                        loading="eager"
+                        decoding="async"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </figure>
+
+              <figure className="a3__card a3__card--bottom">
+                <div className="a3__clip">
+                  <img src={BOTTOM.src} width={BOTTOM.width} height={BOTTOM.height} alt={BOTTOM.alt} loading="lazy" decoding="async" />
+                  <span className="a3__shade" aria-hidden="true" />
+                </div>
+              </figure>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* =====================================================================
+          MOBILE & TABLET PRESENTATION (< 1024px)
+          - Stage 1: Clean intro typography
+          - Stage 2: Single large company image rising from bottom & settling
+          - Stage 3: Content below the image revealed naturally
+          - Only single large company image (NO top or bottom cards)
+          ===================================================================== */}
+      <div className="a3__mobile js-a3-mobile">
+        {/* Stage 1 & Stage 2 Pinned Stage */}
+        <div className="a3__m-stage js-a3-m-stage">
+          {/* Stage 1: Intro */}
+          <div className="a3__m-intro js-a3-m-intro">
+            <p className="eyebrow js-a3-m-intro-fade">About SSK</p>
+            <h2 className="a3__m-intro-title">
+              <Lines lines={['A manufacturer', 'built around', 'the edge.']} accent={2} />
+            </h2>
+            <p className="a3__m-intro-text js-a3-m-intro-fade">
+              Edge banding, panel processing and the materials that go with it.
+            </p>
+          </div>
+
+          {/* Stage 2: Single Large Company Image */}
+          <div className="a3__m-media js-a3-m-media">
+            <div className="a3__m-frame">
+              <img
+                src={MAIN.src}
+                width={MAIN.width}
+                height={MAIN.height}
+                alt={MAIN.alt}
+                className="a3__m-img"
+                loading="eager"
+                decoding="async"
+              />
+            </div>
+          </div>
         </div>
 
-        {/* Left column (desktop final composition) */}
-        <header className="a3__head js-a3-head">
-          <p className="eyebrow js-a3-head-fade">About SSK</p>
-          <h2 id="about-title" className="a3__title">
+        {/* Stage 3: Content Below the Image */}
+        <div className="a3__m-body js-a3-m-body">
+          <h3 className="a3__m-title js-a3-m-fade">
             <Lines lines={['Built', 'around', 'the edge.']} accent={2} />
-          </h2>
-        </header>
+          </h3>
 
-        {/* Centre column placeholder: reserves the stack's width in the grid and is
-            measured by GSAP, so the 3D stack can never drift into the text. */}
-        <div className="a3__slot js-a3-slot" aria-hidden="true" />
-
-        {/* Right column */}
-        <div className="a3__body js-a3-body">
-          <p className="a3__lede" data-reveal="fade">
+          <p className="a3__m-lede js-a3-m-fade">
             SSK is a manufacturing business with edge banding at its core — supported by panel
             processing and the materials that go with it. We work to the millimetre because the
             edge is where quality shows.
           </p>
 
-          <dl className="a3__facts" data-reveal="stagger">
-            <div className="a3__fact">
+          <dl className="a3__m-facts js-a3-m-fade">
+            <div className="a3__m-fact">
               <dt>Regions</dt>
               <dd>Tamil Nadu, Kerala, Karnataka</dd>
             </div>
           </dl>
 
-          <div className="a3__cta" data-reveal="fade" data-y="24">
+          <div className="a3__m-cta js-a3-m-fade">
             <Link to="/about" className="textlink">
               Discover our story
               <ArrowUpRight size={16} aria-hidden="true" />
             </Link>
-          </div>
-        </div>
-
-        {/* The 3D stack: three panels — top, main (single company image), bottom */}
-        <div className="a3__scene">
-          <div className="a3__world js-a3-world">
-            <figure className="a3__card a3__card--top">
-              <div className="a3__clip">
-                <img src={TOP.src} width={TOP.width} height={TOP.height} alt={TOP.alt} loading="lazy" decoding="async" />
-                <span className="a3__shade" aria-hidden="true" />
-              </div>
-            </figure>
-
-            <figure className="a3__card a3__card--main">
-              <span className="a3__shadow js-a3-shadow" aria-hidden="true" />
-              <div className="a3__clip">
-                <div className="a3__reel js-a3-reel">
-                  <div className="a3__frame js-a3-frame">
-                    <img
-                      className="js-a3-main-img"
-                      src={MAIN.src}
-                      width={MAIN.width}
-                      height={MAIN.height}
-                      alt={MAIN.alt}
-                      loading="eager"
-                      decoding="async"
-                    />
-                  </div>
-                </div>
-              </div>
-            </figure>
-
-            <figure className="a3__card a3__card--bottom">
-              <div className="a3__clip">
-                <img src={BOTTOM.src} width={BOTTOM.width} height={BOTTOM.height} alt={BOTTOM.alt} loading="lazy" decoding="async" />
-                <span className="a3__shade" aria-hidden="true" />
-              </div>
-            </figure>
           </div>
         </div>
       </div>

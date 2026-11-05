@@ -161,8 +161,8 @@ const SskNavbar = () => {
               aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
               onClick={() => setOpenPath(isOpen ? null : pathname)}
             >
-              <span className="ssk-nav__toggle-label">{isOpen ? 'Close' : 'Menu'}</span>
               <span className="ssk-nav__burger" aria-hidden="true">
+                <span className="ssk-nav__burger-line" />
                 <span className="ssk-nav__burger-line" />
                 <span className="ssk-nav__burger-line" />
               </span>
@@ -210,8 +210,8 @@ const SskNavbar = () => {
               tabIndex={isOpen ? 0 : -1}
             >
               <div>
-                <span className="ssk-nav__menu-brand-eyebrow">Sister Brand Experience</span>
-                <span className="ssk-nav__menu-brand-title">Discover Sankan Interiors</span>
+                <span className="ssk-nav__menu-brand-eyebrow">Explore Sankan</span>
+                <span className="ssk-nav__menu-brand-title">Sankan Interiors</span>
               </div>
               <span className="ssk-nav__menu-brand-icon" aria-hidden="true">
                 <ArrowUpRight size={22} />
