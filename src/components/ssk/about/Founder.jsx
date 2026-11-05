@@ -129,28 +129,32 @@ const Founder = () => {
         <div className="afounder__grid">
           {/* LEFT COLUMN — Founder Details & Biography */}
           <div className="afounder__content">
-            <p className="eyebrow afounder__eyebrow js-founder-kicker">
-              {FOUNDER_DATA.eyebrow}
-            </p>
+            <div className="afounder__header">
+              <p className="eyebrow afounder__eyebrow js-founder-kicker">
+                {FOUNDER_DATA.eyebrow}
+              </p>
 
-            <h2 id="founder-heading" className="afounder__name ssk-h-section">
-              <Lines lines={FOUNDER_DATA.nameLines} />
-            </h2>
+              <h2 id="founder-heading" className="afounder__name ssk-h-section">
+                <Lines lines={FOUNDER_DATA.nameLines} />
+              </h2>
 
-            <p className="afounder__role js-founder-role">{FOUNDER_DATA.designation}</p>
+              <p className="afounder__role js-founder-role">{FOUNDER_DATA.designation}</p>
+            </div>
 
-            <div className="afounder__rule js-founder-rule" aria-hidden="true" />
+            <div className="afounder__body">
+              <div className="afounder__rule js-founder-rule" aria-hidden="true" />
 
-            <blockquote className="afounder__quote js-founder-copy">
-              <p>{FOUNDER_DATA.quote}</p>
-            </blockquote>
+              <blockquote className="afounder__quote js-founder-copy">
+                <p>{FOUNDER_DATA.quote}</p>
+              </blockquote>
 
-            <div className="afounder__bio">
-              {FOUNDER_DATA.bioParagraphs.map((paragraph, idx) => (
-                <p key={idx} className="afounder__bio-p js-founder-copy">
-                  {paragraph}
-                </p>
-              ))}
+              <div className="afounder__bio">
+                {FOUNDER_DATA.bioParagraphs.map((paragraph, idx) => (
+                  <p key={idx} className="afounder__bio-p js-founder-copy">
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
             </div>
           </div>
 
